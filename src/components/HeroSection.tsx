@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { SmartphoneMockup } from './SmartphoneMockup';
 import { PageRoute } from '../types';
+import cardImage from '../assets/images/hero_human_user_1790143123211.jpg';
 import {
   ArrowRight,
   ShieldCheck,
@@ -36,12 +37,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section id="hero" className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-[#F7F8FA]">
       {/* Subtle geometric dot grid background */}
       <div className="absolute inset-0 bg-[radial-gradient(#E2E8F0_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
-      
+
       {/* Soft Ambient Radial Accents */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-[#4F6BFF]/10 via-[#20C7B5]/6 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        
+
         {/* Wise-Style Quick Audience Router Banner */}
         <div className="mb-8 flex flex-wrap items-center gap-2 text-xs">
           <span className="text-slate-400 font-medium">Explore by audience:</span>
@@ -69,10 +70,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
+
           {/* Left Column: Core Value Proposition */}
           <div className="lg:col-span-6 flex flex-col items-start text-left space-y-6">
-            
+
             {/* Audience-First Tag */}
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 tracking-wider uppercase">
               <span className="text-[#4F6BFF]">All-in-One Platform</span>
@@ -140,36 +141,33 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Right Column: Hero Visual with Human Element & Live App Mockup */}
           <div className="lg:col-span-6 relative flex flex-col items-center">
-            
+
             {/* Visual Presentation Mode Switcher */}
             <div className="flex items-center gap-1 bg-white/90 backdrop-blur-md p-1 rounded-full border border-slate-200 shadow-xs mb-4 text-xs z-20">
               <button
                 onClick={() => setVisualMode('composite')}
-                className={`px-3 py-1 rounded-full font-medium transition-all ${
-                  visualMode === 'composite'
+                className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'composite'
                     ? 'bg-[#0A0A0B] text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 Human + App
               </button>
               <button
                 onClick={() => setVisualMode('human-only')}
-                className={`px-3 py-1 rounded-full font-medium transition-all ${
-                  visualMode === 'human-only'
+                className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'human-only'
                     ? 'bg-[#0A0A0B] text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 Human Portrait
               </button>
               <button
                 onClick={() => setVisualMode('app-only')}
-                className={`px-3 py-1 rounded-full font-medium transition-all ${
-                  visualMode === 'app-only'
+                className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'app-only'
                     ? 'bg-[#0A0A0B] text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 App Interface Only
               </button>
@@ -177,20 +175,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Visual Display Container */}
             <div className="relative w-full flex items-center justify-center min-h-[580px]">
-              
+
               {/* COMPOSITE MODE: Human Element on Left/Back + Smartphone on Foreground */}
               {visualMode === 'composite' && (
                 <div className="relative w-full max-w-[560px] flex items-center justify-center">
-                  
+
                   {/* Human Element Editorial Portrait Card */}
                   <div className="absolute -left-2 sm:left-2 bottom-4 sm:bottom-8 w-[240px] sm:w-[280px] h-[360px] sm:h-[400px] rounded-3xl overflow-hidden shadow-2xl border border-white/60 z-10 group">
-                    <img
-                      src="/src/assets/images/hero_human_user_1790143123211.jpg"
+                    "<img src={cardImage} alt="Card image"
                       alt="MyCredAxis member experiencing seamless credit management"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover object-top filter brightness-95 group-hover:scale-105 transition-transform duration-700"
                     />
-                    
+
                     {/* Gradient Overlay for Legibility */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/85 via-transparent to-black/20" />
 
@@ -221,10 +218,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {visualMode === 'human-only' && (
                 <div className="relative w-full max-w-[460px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
                   <img
-                    src="/src/assets/images/hero_human_user_1790143123211.jpg"
-                    alt="MyCredAxis user holding smartphone"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-[520px] object-cover object-top"
+                    src="<img src={cardImage} alt=" Card image" />"
+                  alt="MyCredAxis user holding smartphone"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-[520px] object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/90 via-[#0A0A0B]/30 to-transparent flex flex-col justify-end p-8 text-white">
                     <span className="text-xs font-mono uppercase tracking-widest text-[#20C7B5]">
