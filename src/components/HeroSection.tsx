@@ -147,8 +147,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 onClick={() => setVisualMode('composite')}
                 className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'composite'
-                    ? 'bg-[#0A0A0B] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#0A0A0B] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
                   }`}
               >
                 Human + App
@@ -156,8 +156,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 onClick={() => setVisualMode('human-only')}
                 className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'human-only'
-                    ? 'bg-[#0A0A0B] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#0A0A0B] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
                   }`}
               >
                 Human Portrait
@@ -165,8 +165,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 onClick={() => setVisualMode('app-only')}
                 className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'app-only'
-                    ? 'bg-[#0A0A0B] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#0A0A0B] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
                   }`}
               >
                 App Interface Only
@@ -218,10 +218,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {visualMode === 'human-only' && (
                 <div className="relative w-full max-w-[460px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
                   <img
-                    src="<img src={cardImage} alt=" Card image" />"
-                  alt="MyCredAxis user holding smartphone"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-[520px] object-cover object-top"
+                    src={cardImage}
+                    alt="MyCredAxis user holding smartphone"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-[520px] object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/90 via-[#0A0A0B]/30 to-transparent flex flex-col justify-end p-8 text-white">
                     <span className="text-xs font-mono uppercase tracking-widest text-[#20C7B5]">
