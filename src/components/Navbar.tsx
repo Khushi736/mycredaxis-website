@@ -122,8 +122,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-6 py-5 shadow-xl">
-          <nav className="flex flex-col space-y-3">
+        <div className="md:hidden bg-white border-b border-slate-200 px-6 py-5 shadow-xl flex flex-col h-[calc(100vh-75px)] overflow-y-auto">
+          <nav className="flex flex-col space-y-3 flex-1">
             <button
               onClick={() => {
                 onNavigate('home');
@@ -131,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }}
               className="text-left text-sm font-bold text-slate-900 py-1.5"
             >
-              Home (Audience Overview)
+              Home 
             </button>
 
             {navItems.map((item) => (
@@ -151,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             ))}
 
-            <div className="pt-4 border-t border-slate-100 flex flex-col gap-2">
+            <div className="pt-4 border-t border-slate-100 flex flex-col gap-2 mt-auto pb-4">
               <button
                 onClick={() => {
                   onOpenLogIn();

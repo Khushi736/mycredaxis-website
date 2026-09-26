@@ -34,12 +34,20 @@ import { ContactModal } from './components/ContactModal';
 import { LogInModal } from './components/LogInModal';
 import { DesignSpecHUD } from './components/DesignSpecHUD';
 import { GridOverlay } from './components/GridOverlay';
+import { PrivacyPolicyPage } from './components/PrivacyPolicy';
+import { TermsConditionsPage } from './components/TermsConditions';
 
 // Data
 import { HOMEPAGE_FAQS } from './data/faqData';
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState<PageRoute>('home');
+  // Initial route check from URL hash so refresh keeps the current page
+  const [currentRoute, setCurrentRoute] = useState<PageRoute>(() => {
+    const hash = window.location.hash.replace('#', '') as PageRoute;
+    const validRoutes: PageRoute[] = ['home', 'individuals', 'business', 'partners', 'security', 'faq', 'contact', 'privacy-policy', 'terms-conditions'];
+    return validRoutes.includes(hash) ? hash : 'home';
+  });
+
   const [showGrid, setShowGrid] = useState<boolean>(false);
 
   // Modals
@@ -48,9 +56,24 @@ export default function App() {
   const [contactType, setContactType] = useState<'individual' | 'business' | 'partner' | 'general'>('business');
   const [logInOpen, setLogInOpen] = useState(false);
 
-  // Handle route change with scroll to top
+  // Sync route changes with URL hash
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '') as PageRoute;
+      const validRoutes: PageRoute[] = ['home', 'individuals', 'business', 'partners', 'security', 'faq', 'contact', 'privacy-policy', 'terms-conditions'];
+      if (validRoutes.includes(hash)) {
+        setCurrentRoute(hash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Handle route change with scroll to top and updating URL hash
   const handleNavigate = (route: PageRoute) => {
     setCurrentRoute(route);
+    window.location.hash = route;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -58,6 +81,27 @@ export default function App() {
     setContactType(type);
     setContactOpen(true);
   };
+
+  // If the Privacy Policy page has its own layout, render it here
+  if (currentRoute === 'privacy-policy') {
+    return (
+      <PrivacyPolicyPage
+        onNavigate={handleNavigate}
+        onOpenLogIn={() => setLogInOpen(true)}
+        onOpenDownload={() => setDownloadOpen(true)}
+        onOpenContact={handleOpenContact}
+      />
+    );
+  }
+
+  // If the Terms & Conditions page has its own layout, render it here
+  if (currentRoute === 'terms-conditions') {
+    return (
+      <TermsConditionsPage
+        onNavigate={handleNavigate}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F7F8FA] text-[#0A0A0B] selection:bg-[#4F6BFF]/20 selection:text-[#4F6BFF] relative flex flex-col justify-between font-body">
@@ -82,44 +126,44 @@ export default function App() {
       <main className="flex-1">
         {currentRoute === 'home' && (
           <>
-            {/* 1. Hero Section with Human Element Portrait, Large Product UI, Dual CTAs */}
+            {/* 1. Hero Section */}
             <HeroSection
               onNavigate={handleNavigate}
               onOpenDownload={() => setDownloadOpen(true)}
               onOpenContact={handleOpenContact}
             />
 
-            {/* 2. Trust Strip (Jupiter Pattern: No placeholder gap, lead with compliance) */}
+            {/* 2. Trust Strip */}
             <TrustStrip />
 
-            {/* 3. Product Suite Grid ("Simple money, smarter moves" - 4 clean one-line cards) */}
+            {/* 3. Product Suite Grid */}
             <ProductSuiteGrid onNavigate={handleNavigate} />
 
-            {/* 4. Rewards Spotlight (CRED-Style Dedicated Block - discipline rewards) */}
+            {/* 4. Rewards Spotlight */}
             <RewardsSpotlight onDownload={() => setDownloadOpen(true)} />
 
-            {/* 5. Everyday Utility Spotlight (PhonePe-Style - BBPS marked Coming Soon) */}
+            {/* 5. Everyday Utility Spotlight */}
             <UtilitySpotlight />
 
-            {/* 6. Track Your Money (Jupiter-Style Visibility Block with real app screenshot) */}
+            {/* 6. Track Your Money */}
             <TrackMoneyBlock onDownload={() => setDownloadOpen(true)} />
 
-            {/* 7. How It Works (5-Step Flow + Bank-Authenticated Consent Banner) */}
+            {/* 7. How It Works */}
             <HowItWorksBlock />
 
-            {/* 8. Why MyCredAxis (Differentiators: Full financial layer, Super Key, Consent-first) */}
+            {/* 8. Why MyCredAxis */}
             <WhyMyCredAxisBlock />
 
-            {/* 9. Security & Compliance (FireAI Pattern: Badges + Bold Statement + Controls) */}
+            {/* 9. Security & Compliance */}
             <SecurityComplianceBlock onNavigateToSecurity={() => handleNavigate('security')} />
 
-            {/* 10. Built for Every Industry (8 sectors) */}
+            {/* 10. Built for Every Industry */}
             <IndustryGrid />
 
-            {/* 11. What's Next (Roadmap teaser with explicit Coming Soon labels) */}
+            {/* 11. What's Next */}
             <RoadmapTeaser />
 
-            {/* 12. Homepage FAQ (5-6 universal questions + link to full /faq) */}
+            {/* 12. Homepage FAQ */}
             <FAQSection
               items={HOMEPAGE_FAQS}
               title="Frequently Asked Questions"
@@ -127,7 +171,7 @@ export default function App() {
               onNavigateToFullFaq={() => handleNavigate('faq')}
             />
 
-            {/* 13. Final CTA Banner (Three CTAs side by side) */}
+            {/* 13. Final CTA Banner */}
             <FinalCTABanner
               onOpenDownload={() => setDownloadOpen(true)}
               onOpenContact={handleOpenContact}
@@ -157,7 +201,7 @@ export default function App() {
         {currentRoute === 'faq' && <FAQPage onOpenContact={handleOpenContact} />}
       </main>
 
-      {/* Standard Footer with Sitemap & Compliance Row */}
+      {/* Standard Footer */}
       <Footer
         onNavigate={handleNavigate}
         onOpenContact={handleOpenContact}

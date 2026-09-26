@@ -101,21 +101,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {/* Primary Individual CTA */}
               <button
                 onClick={onOpenDownload}
-                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 active:scale-98 text-white font-semibold text-sm transition-all shadow-md shadow-black/10 cursor-pointer"
+                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 active:scale-98 text-white font-semibold text-sm transition-all shadow-md shadow-black/10 cursor-pointer w-full sm:w-auto justify-center"
               >
                 <Download className="w-4 h-4 text-[#20C7B5]" />
                 <span>Download the App</span>
-                <span className="text-xs text-slate-400 font-normal hidden sm:inline">(Individuals)</span>
+                {/* <span className="text-xs text-slate-400 font-normal hidden sm:inline">(Individuals)</span> */}
               </button>
 
               {/* Business & Partner CTA */}
               <button
                 onClick={() => onOpenContact('business')}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-slate-50 active:scale-98 text-[#0A0A0B] font-semibold text-sm border border-slate-200 shadow-xs hover:border-slate-300 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-slate-50 active:scale-98 text-[#0A0A0B] font-semibold text-sm border border-slate-200 shadow-xs hover:border-slate-300 transition-all cursor-pointer w-full sm:w-auto justify-center"
               >
                 <Building2 className="w-4 h-4 text-[#4F6BFF]" />
                 <span>Talk to Our Team</span>
-                <span className="text-xs text-slate-400 font-normal hidden sm:inline">(Businesses & Partners)</span>
+                {/* <span className="text-xs text-slate-400 font-normal hidden sm:inline">(Businesses & Partners)</span> */}
               </button>
             </div>
 
@@ -125,12 +125,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span className="w-1.5 h-1.5 rounded-full bg-[#20C7B5]" />
                 Consent-First Architecture
               </span>
-              <span aria-hidden="true" className="text-slate-300">·</span>
+              <span aria-hidden="true" className="text-slate-300 hidden sm:inline">·</span>
               <span className="flex items-center gap-1.5 text-slate-700">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#4F6BFF]" />
                 Bank-Authenticated Mandates
               </span>
-              <span aria-hidden="true" className="text-slate-300">·</span>
+              <span aria-hidden="true" className="text-slate-300 hidden sm:inline">·</span>
               <span className="flex items-center gap-1.5 text-slate-700">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0B]" />
                 Zero Stored Credentials
@@ -140,13 +140,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Right Column: Hero Visual with Human Element & Live App Mockup */}
-          <div className="lg:col-span-6 relative flex flex-col items-center">
+          <div className="lg:col-span-6 relative flex flex-col items-center mt-12 lg:mt-0">
 
-            {/* Visual Presentation Mode Switcher */}
-            <div className="flex items-center gap-1 bg-white/90 backdrop-blur-md p-1 rounded-full border border-slate-200 shadow-xs mb-4 text-xs z-20">
+            {/* Visual Presentation Mode Switcher (Now Single-Line on Mobile) */}
+            <div className="flex justify-center items-center p-1 bg-white/90 backdrop-blur-md rounded-full border border-slate-200 shadow-xs mb-8 sm:mb-4 text-xs z-20 w-max mx-auto">
               <button
                 onClick={() => setVisualMode('composite')}
-                className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'composite'
+                className={`px-3 py-1.5 sm:py-1 rounded-full font-medium whitespace-nowrap transition-all ${visualMode === 'composite'
                   ? 'bg-[#0A0A0B] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
                   }`}
@@ -155,7 +155,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
               <button
                 onClick={() => setVisualMode('human-only')}
-                className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'human-only'
+                className={`px-3 py-1.5 sm:py-1 rounded-full font-medium whitespace-nowrap transition-all ${visualMode === 'human-only'
                   ? 'bg-[#0A0A0B] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
                   }`}
@@ -164,25 +164,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
               <button
                 onClick={() => setVisualMode('app-only')}
-                className={`px-3 py-1 rounded-full font-medium transition-all ${visualMode === 'app-only'
+                className={`px-3 py-1.5 sm:py-1 rounded-full font-medium whitespace-nowrap transition-all ${visualMode === 'app-only'
                   ? 'bg-[#0A0A0B] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
                   }`}
               >
-                App Interface Only
+                App Only
               </button>
             </div>
 
-            {/* Visual Display Container */}
-            <div className="relative w-full flex items-center justify-center min-h-[580px]">
+            {/* Visual Display Container - Increased Mobile Height */}
+            <div className="relative w-full flex items-end sm:items-center justify-center min-h-[480px] sm:min-h-[500px] lg:min-h-[580px]">
 
               {/* COMPOSITE MODE: Human Element on Left/Back + Smartphone on Foreground */}
               {visualMode === 'composite' && (
-                <div className="relative w-full max-w-[560px] flex items-center justify-center">
+                <div className="relative w-full max-w-[560px] h-[460px] sm:h-auto flex items-end sm:items-center justify-center">
 
                   {/* Human Element Editorial Portrait Card */}
-                  <div className="absolute -left-2 sm:left-2 bottom-4 sm:bottom-8 w-[240px] sm:w-[280px] h-[360px] sm:h-[400px] rounded-3xl overflow-hidden shadow-2xl border border-white/60 z-10 group">
-                    "<img src={cardImage} alt="Card image"
+                  <div className="absolute left-0 sm:left-4 lg:left-2 bottom-0 sm:bottom-8 lg:bottom-8 w-[170px] sm:w-[240px] lg:w-[280px] h-[280px] sm:h-[360px] lg:h-[400px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/60 z-10 group">
+                    <img 
+                      src={cardImage} 
                       alt="MyCredAxis member experiencing seamless credit management"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover object-top filter brightness-95 group-hover:scale-105 transition-transform duration-700"
@@ -192,22 +193,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/85 via-transparent to-black/20" />
 
                     {/* Floating Floating Stat Badge */}
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#20C7B5] mb-1">
+                    <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 text-white">
+                      <div className="flex items-center gap-1.5 text-[8px] sm:text-[10px] font-mono text-[#20C7B5] mb-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#20C7B5] animate-pulse" />
                         <span>REWARDS UNLOCKED</span>
                       </div>
-                      <p className="font-display font-bold text-xs leading-snug">
+                      <p className="font-display font-bold text-[10px] sm:text-xs leading-snug">
                         "Pay on time. Build healthier credit habits."
                       </p>
-                      <span className="text-[10px] text-slate-300 mt-1 block">
+                      <span className="text-[8px] sm:text-[10px] text-slate-300 mt-1 block">
                         MyCredAxis
                       </span>
                     </div>
                   </div>
 
                   {/* Smartphone UI Mockup in 3D Angle */}
-                  <div className="relative z-20 sm:translate-x-16 -translate-y-2">
+                  <div className="absolute right-0 sm:relative sm:right-auto bottom-0 sm:bottom-auto z-20 origin-bottom-right sm:origin-center scale-[0.55] sm:scale-90 lg:scale-100 sm:translate-x-16 lg:translate-x-12 sm:-translate-y-2">
                     <SmartphoneMockup perspective="isometric" interactive={false} />
                   </div>
 
@@ -221,16 +222,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     src={cardImage}
                     alt="MyCredAxis user holding smartphone"
                     referrerPolicy="no-referrer"
-                    className="w-full h-[520px] object-cover object-top"
+                    className="w-full h-[380px] md:h-[460px] lg:h-[520px] object-cover object-top"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/90 via-[#0A0A0B]/30 to-transparent flex flex-col justify-end p-8 text-white">
-                    <span className="text-xs font-mono uppercase tracking-widest text-[#20C7B5]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/90 via-[#0A0A0B]/30 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
+                    <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#20C7B5]">
                       Confidence in Every Transaction
                     </span>
-                    <h3 className="font-display font-bold text-2xl mt-1 text-white">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl mt-1 text-white">
                       Your credit and payments, together in one app.
                     </h3>
-                    <p className="text-xs text-slate-300 mt-2 font-body leading-relaxed">
+                    <p className="text-[10px] sm:text-xs text-slate-300 mt-2 font-body leading-relaxed">
                       Manage credit, payments, and rewards in one place.
                     </p>
                   </div>
@@ -239,7 +240,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               {/* APP ONLY MODE */}
               {visualMode === 'app-only' && (
-                <div className="relative z-10">
+                <div className="relative z-10 scale-[0.65] sm:scale-90 lg:scale-100 origin-center mb-6 sm:mb-0">
                   <SmartphoneMockup perspective="isometric" interactive={true} />
                 </div>
               )}

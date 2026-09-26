@@ -190,8 +190,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenContact, onOpe
               <ul className="space-y-2.5">
                 <li><span className="text-slate-300">By Bisani Brother</span></li>
                 <li><span className="text-slate-500">Bangalore · Mumbai</span></li>
-                <li><span className="text-slate-500">Privacy Policy</span></li>
-                <li><span className="text-slate-500">Terms of Service</span></li>
+                <li>
+                  <button
+                    onClick={() => onNavigate('privacy-policy')}
+                    className="hover:text-white transition-colors cursor-pointer text-left"
+                  >
+                    Privacy Policy
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    onClick={() => onNavigate('terms-conditions')}
+                    className="hover:text-white transition-colors cursor-pointer text-left"
+                  >
+                    Terms and Conditions
+                  </button>
+                </li>
+                {/* <li><span className="text-slate-500 hover:text-white transition-colors cursor-pointer">Terms of Service</span></li> */}
               </ul>
             </div>
 

@@ -60,11 +60,12 @@ export const ProductSuiteGrid: React.FC<ProductSuiteGridProps> = ({ onNavigate }
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-12">
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-            <span className="text-[#4F6BFF]">Core Product Suite</span>
-            <span aria-hidden="true">·</span>
-            <span>Simple Money, Smarter Moves</span>
+        <div className="max-w-3xl mb-10 sm:mb-12">
+          {/* Pre-heading fixed for mobile wrapping */}
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 sm:mb-2">
+            <span className="text-[#4F6BFF] whitespace-nowrap">Core Product Suite</span>
+            <span aria-hidden="true" className="text-slate-300">·</span>
+            <span className="whitespace-nowrap">Simple Money, Smarter Moves</span>
           </div>
 
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight">
@@ -76,36 +77,36 @@ export const ProductSuiteGrid: React.FC<ProductSuiteGridProps> = ({ onNavigate }
           </p>
         </div>
 
-        {/* 4 Clean Cards Grid (Jupiter Pattern: one-line benefit, not a paragraph) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 4 Clean Cards Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
           {products.map((prod) => {
             const Icon = prod.icon;
             return (
               <div
                 key={prod.id}
                 onClick={() => onNavigate(prod.targetRoute)}
-                className="fintech-card rounded-3xl p-6 flex flex-col justify-between cursor-pointer border-slate-200/90 hover:border-slate-300 group"
+                className="fintech-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex flex-col justify-between cursor-pointer border-slate-200/90 hover:border-slate-300 group"
               >
                 <div>
                   <div
-                    className={`w-12 h-12 rounded-2xl ${prod.bgAccent} flex items-center justify-center mb-5 group-hover:scale-105 transition-transform`}
+                    className={`w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl ${prod.bgAccent} flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-105 transition-transform`}
                     style={{ color: prod.accent }}
                   >
-                    <Icon className="w-6 h-6" />
+                    <Icon className="w-4 h-4 sm:w-6 sm:h-6" />
                   </div>
 
-                  <h3 className="font-display font-bold text-xl text-[#0A0A0B]">
+                  <h3 className="font-display font-bold text-sm sm:text-xl text-[#0A0A0B]">
                     {prod.title}
                   </h3>
 
-                  <p className="mt-2 text-sm text-slate-600 font-body leading-relaxed">
+                  <p className="mt-1.5 sm:mt-2 text-[10px] sm:text-sm text-slate-600 font-body leading-[1.3] sm:leading-relaxed">
                     {prod.benefit}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500 group-hover:text-[#4F6BFF] transition-colors">
-                  <span>{prod.actionText}</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <div className="mt-3 sm:mt-6 pt-2.5 sm:pt-4 border-t border-slate-100 flex items-center justify-between text-[9px] sm:text-xs font-semibold text-slate-500 group-hover:text-[#4F6BFF] transition-colors">
+                  <span className="truncate pr-1">{prod.actionText}</span>
+                  <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform shrink-0" />
                 </div>
               </div>
             );
