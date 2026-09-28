@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RotateCw, Gauge, Wallet, KeyRound, ArrowRight } from 'lucide-react';
 import { PageRoute } from '../types';
 
@@ -12,6 +12,28 @@ interface ProductSuiteGridProps {
 }
 
 export const ProductSuiteGrid: React.FC<ProductSuiteGridProps> = ({ onNavigate }) => {
+  // Scroll reveal ke liye state aur ref
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const products = [
     {
       id: 'collections',
@@ -44,8 +66,8 @@ export const ProductSuiteGrid: React.FC<ProductSuiteGridProps> = ({ onNavigate }
       targetRoute: 'individuals' as PageRoute,
     },
     {
-      id: 'super-key',
-      title: 'Super Key',
+      id: 'master-key',
+      title: 'Master Key',
       benefit: 'Secured device financing, with built-in recovery if payments stop.',
       icon: KeyRound,
       accent: '#0A0A0B',
@@ -56,50 +78,63 @@ export const ProductSuiteGrid: React.FC<ProductSuiteGridProps> = ({ onNavigate }
   ];
 
   return (
-    <section id="product-suite" className="py-20 bg-white border-b border-slate-200/80">
+    <section 
+      id="product-suite" 
+      ref={sectionRef}
+      className="py-16 sm:py-20 lg:py-24 bg-white border-b border-slate-200/80 overflow-hidden"
+      style={{ fontFamily: "'Poppins', sans-serif" }}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
-        {/* Section Header */}
+        {/* Section Header with Smooth Scroll Reveal */}
         <div className="max-w-3xl mb-10 sm:mb-12">
-          {/* Pre-heading fixed for mobile wrapping */}
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 sm:mb-2">
-            <span className="text-[#4F6BFF] whitespace-nowrap">Core Product Suite</span>
-            <span aria-hidden="true" className="text-slate-300">·</span>
-            <span className="whitespace-nowrap">Simple Money, Smarter Moves</span>
-          </div>
-
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight">
+          <h2 
+            className={`font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight transition-all duration-1000 transform ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+            style={{ transitionDelay: '100ms' }}
+          >
             Simple money, smarter moves.
           </h2>
 
-          <p className="font-body text-base text-slate-600 mt-2">
+          <p 
+            className={`text-base text-slate-600 mt-2 transition-all duration-1000 transform ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: '250ms' }}
+          >
             Collections, credit visibility, wallet, and secured device financing in one platform.
           </p>
         </div>
 
-        {/* 4 Clean Cards Grid */}
+        {/* 4 Clean Cards Grid with Staggered Smooth Scroll Reveal */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
-          {products.map((prod) => {
+          {products.map((prod, index) => {
             const Icon = prod.icon;
+            const delay = 400 + index * 150;
+
             return (
               <div
                 key={prod.id}
                 onClick={() => onNavigate(prod.targetRoute)}
-                className="fintech-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex flex-col justify-between cursor-pointer border-slate-200/90 hover:border-slate-300 group"
+                className={`fintech-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 flex flex-col justify-between cursor-pointer border border-slate-200/90 hover:border-slate-300 group transition-all duration-1000 transform ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                } hover:-translate-y-1 hover:shadow-lg`}
+                style={{ transitionDelay: `${delay}ms` }}
               >
                 <div>
                   <div
-                    className={`w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl ${prod.bgAccent} flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-105 transition-transform`}
+                    className={`w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl ${prod.bgAccent} flex items-center justify-center mb-3 sm:mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3`}
                     style={{ color: prod.accent }}
                   >
-                    <Icon className="w-4 h-4 sm:w-6 sm:h-6" />
+                    <Icon className="w-4 h-4 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:scale-110" />
                   </div>
 
-                  <h3 className="font-display font-bold text-sm sm:text-xl text-[#0A0A0B]">
+                  <h3 className="font-bold text-sm sm:text-xl text-[#0A0A0B] transition-colors duration-300 group-hover:text-[#4F6BFF]">
                     {prod.title}
                   </h3>
 
-                  <p className="mt-1.5 sm:mt-2 text-[10px] sm:text-sm text-slate-600 font-body leading-[1.3] sm:leading-relaxed">
+                  <p className="mt-1.5 sm:mt-2 text-[10px] sm:text-sm text-slate-600 leading-[1.3] sm:leading-relaxed">
                     {prod.benefit}
                   </p>
                 </div>

@@ -4,8 +4,12 @@
  */
 
 import React, { useState } from 'react';
-import { X, QrCode, Smartphone, Check, ArrowRight, Apple, Play } from 'lucide-react';
+import { X, QrCode, Smartphone, Check, ArrowRight } from 'lucide-react';
 import { MyCredAxisLogo } from './MyCredAxisLogo';
+
+// Import your actual images
+import qrCodeImage from '../assets/images/app-qr-code.webp'; 
+import playStoreIcon from '../assets/images/google-play-store-icon.png'; // Real play store icon image
 
 interface DownloadModalProps {
   isOpen: boolean;
@@ -51,10 +55,14 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
         {/* QR Code and App Badges */}
         <div className="p-5 rounded-2xl bg-[#F7F8FA] border border-slate-200 flex flex-col sm:flex-row items-center gap-6 justify-center">
           
-          {/* QR Code Mockup */}
+          {/* Real QR Code Image */}
           <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-xs flex flex-col items-center">
-            <div className="w-28 h-28 bg-[#0A0A0B] rounded-lg p-2 flex items-center justify-center">
-              <QrCode className="w-24 h-24 text-white" />
+            <div className="w-28 h-28 bg-[#0A0A0B] rounded-lg flex items-center justify-center overflow-hidden">
+              <img 
+                src={qrCodeImage} 
+                alt="Scan to download app" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="text-[10px] font-mono text-slate-500 mt-1.5 font-bold">
               SCAN WITH PHONE
@@ -63,20 +71,16 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
 
           {/* Badges */}
           <div className="flex flex-col gap-2.5 w-full sm:w-auto">
-            {/* Apple Store Button */}
+            {/* Google Play Button with Real Image Icon */}
             <div className="px-4 py-2.5 rounded-xl bg-[#0A0A0B] text-white flex items-center gap-3 cursor-pointer hover:bg-slate-900 transition-colors shadow-xs">
-              <Apple className="w-5 h-5 fill-current" />
-              <div className="text-left">
-                <span className="text-[9px] uppercase tracking-wider text-slate-400 block leading-tight">
-                  Download on the
-                </span>
-                <span className="text-xs font-bold leading-tight">App Store</span>
-              </div>
-            </div>
-
-            {/* Google Play Button */}
-            <div className="px-4 py-2.5 rounded-xl bg-[#0A0A0B] text-white flex items-center gap-3 cursor-pointer hover:bg-slate-900 transition-colors shadow-xs">
-              <Play className="w-5 h-5 fill-current text-white" />
+              
+              {/* Dummy Play icon replaced with Image */}
+              <img 
+                src={playStoreIcon} 
+                alt="Play Store" 
+                className="w-5 h-5 object-contain" 
+              />
+              
               <div className="text-left">
                 <span className="text-[9px] uppercase tracking-wider text-slate-400 block leading-tight">
                   Get it on

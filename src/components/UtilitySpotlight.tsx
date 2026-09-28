@@ -36,17 +36,17 @@ export const UtilitySpotlight: React.FC = () => {
         
         {/* Section Header */}
         <div className="max-w-3xl mb-10 sm:mb-14">
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+          {/* <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
             <span className="text-[#4F6BFF]">Everyday Utility</span>
             <span aria-hidden="true">·</span>
             <span>Comprehensive Coverage</span>
-          </div>
+          </div> */}
 
           <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-[#0A0A0B] tracking-tight">
             Every Bill. Every EMI. One App.
           </h2>
 
-          <p className="font-body text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+          <p className="font-body text-sm sm:text-base text-slate-600 mt-3 leading-relaxed lg:whitespace-nowrap lg:max-w-none">
             Electricity, water, gas, telecom, DTH, insurance, EMIs, traffic challans — MyCredAxis is built to be the one app you open for all of it, not just some of it.
           </p>
         </div>

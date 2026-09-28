@@ -3,21 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SmartphoneMockup } from './SmartphoneMockup';
 import { PageRoute } from '../types';
 import cardImage from '../assets/images/hero_human_user_1790143123211.jpg';
 import {
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle2,
-  Lock,
   Download,
   Building2,
-  Users,
-  Sparkles,
-  ArrowUpRight,
-  ChevronRight
 } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -31,60 +23,66 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenDownload,
   onOpenContact,
 }) => {
-  const [visualMode, setVisualMode] = useState<'composite' | 'app-only' | 'human-only'>('composite');
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Scroll reveal observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section id="hero" className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-[#F7F8FA]">
+    <section 
+      id="hero" 
+      ref={sectionRef}
+      className="relative pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-36 lg:pb-24 overflow-hidden bg-[#F7F8FA]"
+      style={{ fontFamily: "'Poppins', sans-serif" }}
+    >
+      
+      {/* Custom Keyframes for Smooth Floating Animation */}
+      <style>{`
+        @keyframes float-device {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
+          100% { transform: translateY(0px); }
+        }
+        .animate-float {
+          animation: float-device 6s ease-in-out infinite;
+        }
+      `}</style>
+
       {/* Subtle geometric dot grid background */}
       <div className="absolute inset-0 bg-[radial-gradient(#E2E8F0_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
 
-      {/* Soft Ambient Radial Accents */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-[#4F6BFF]/10 via-[#20C7B5]/6 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
-
+      {/* Main Container */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
-        {/* Wise-Style Quick Audience Router Banner */}
-        <div className="mb-8 flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-slate-400 font-medium">Explore by audience:</span>
-          <button
-            onClick={() => onNavigate('individuals')}
-            className="px-3 py-1 rounded-full bg-white hover:bg-slate-100 text-slate-800 font-semibold border border-slate-200 transition-colors flex items-center gap-1 cursor-pointer"
-          >
-            <span>For Individuals</span>
-            <ChevronRight className="w-3 h-3 text-[#4F6BFF]" />
-          </button>
-          <button
-            onClick={() => onNavigate('business')}
-            className="px-3 py-1 rounded-full bg-white hover:bg-slate-100 text-slate-800 font-semibold border border-slate-200 transition-colors flex items-center gap-1 cursor-pointer"
-          >
-            <span>For Businesses</span>
-            <ChevronRight className="w-3 h-3 text-[#20C7B5]" />
-          </button>
-          <button
-            onClick={() => onNavigate('partners')}
-            className="px-3 py-1 rounded-full bg-white hover:bg-slate-100 text-slate-800 font-semibold border border-slate-200 transition-colors flex items-center gap-1 cursor-pointer"
-          >
-            <span>For Partners</span>
-            <ChevronRight className="w-3 h-3 text-slate-600" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
 
           {/* Left Column: Core Value Proposition */}
-          <div className="lg:col-span-6 flex flex-col items-start text-left space-y-6">
+          <div className="lg:col-span-6 flex flex-col items-start text-left space-y-5 sm:space-y-6 z-10">
 
-            {/* Audience-First Tag */}
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 tracking-wider uppercase">
-              <span className="text-[#4F6BFF]">All-in-One Platform</span>
-              <span aria-hidden="true" className="text-slate-300">·</span>
-              <span>Credit & Collections</span>
-              <span aria-hidden="true" className="text-slate-300">·</span>
-              <span className="text-[#20C7B5]">By Bisani Brother</span>
-            </div>
-
-            {/* Official Headline */}
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[54px] leading-[1.12] tracking-tight text-[#0A0A0B]">
+            {/* Official Headline with Smooth Scroll Reveal */}
+            <h1 
+              className={`font-extrabold text-3xl sm:text-5xl lg:text-[54px] leading-[1.15] tracking-tight text-[#0A0A0B] transition-all duration-1000 transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >
               Your Credit. Your Payments.{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] via-[#3854E0] to-[#20C7B5]">
                 One App That Rewards You for Both.
@@ -92,35 +90,48 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </h1>
 
             {/* Official Subhead */}
-            <p className="font-body text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+            <p 
+              className={`text-sm sm:text-lg text-slate-600 leading-relaxed max-w-xl transition-all duration-1000 transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ transitionDelay: '250ms' }}
+            >
               MyCredAxis brings collections, credit visibility, a wallet, and secured device financing into a single platform — pay every bill and EMI in one place, and get recognized for doing it on time.
             </p>
 
-            {/* Dual CTAs (Wise / FireAI pattern) */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            {/* Dual CTAs */}
+            <div 
+              className={`flex flex-wrap items-center gap-3.5 pt-1 w-full sm:w-auto transition-all duration-1000 transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}
+              style={{ transitionDelay: '400ms' }}
+            >
               {/* Primary Individual CTA */}
               <button
                 onClick={onOpenDownload}
-                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 active:scale-98 text-white font-semibold text-sm transition-all shadow-md shadow-black/10 cursor-pointer w-full sm:w-auto justify-center"
+                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 active:scale-98 text-white font-semibold text-xs sm:text-sm transition-all shadow-md shadow-black/10 cursor-pointer w-full sm:w-auto justify-center"
               >
                 <Download className="w-4 h-4 text-[#20C7B5]" />
                 <span>Download the App</span>
-                {/* <span className="text-xs text-slate-400 font-normal hidden sm:inline">(Individuals)</span> */}
               </button>
 
               {/* Business & Partner CTA */}
               <button
                 onClick={() => onOpenContact('business')}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-slate-50 active:scale-98 text-[#0A0A0B] font-semibold text-sm border border-slate-200 shadow-xs hover:border-slate-300 transition-all cursor-pointer w-full sm:w-auto justify-center"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-slate-50 active:scale-98 text-[#0A0A0B] font-semibold text-xs sm:text-sm border border-slate-200 shadow-xs hover:border-slate-300 transition-all cursor-pointer w-full sm:w-auto justify-center"
               >
                 <Building2 className="w-4 h-4 text-[#4F6BFF]" />
                 <span>Talk to Our Team</span>
-                {/* <span className="text-xs text-slate-400 font-normal hidden sm:inline">(Businesses & Partners)</span> */}
               </button>
             </div>
 
-            {/* Unboxed Metadata (Zero-Pill Discipline) */}
-            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-slate-500 font-medium">
+            {/* Unboxed Metadata */}
+            <div 
+              className={`pt-2 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-slate-500 font-medium transition-all duration-1000 transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-14'
+              }`}
+              style={{ transitionDelay: '550ms' }}
+            >
               <span className="flex items-center gap-1.5 text-slate-700">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#20C7B5]" />
                 Consent-First Architecture
@@ -140,113 +151,59 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Right Column: Hero Visual with Human Element & Live App Mockup */}
-          <div className="lg:col-span-6 relative flex flex-col items-center mt-12 lg:mt-0">
+          <div className="lg:col-span-6 relative flex flex-col items-center mt-8 lg:mt-0">
+            
+            <div className="relative w-full flex items-center justify-center min-h-[360px] sm:min-h-[450px] lg:min-h-[550px] z-10">
 
-            {/* Visual Presentation Mode Switcher (Now Single-Line on Mobile) */}
-            <div className="flex justify-center items-center p-1 bg-white/90 backdrop-blur-md rounded-full border border-slate-200 shadow-xs mb-8 sm:mb-4 text-xs z-20 w-max mx-auto">
-              <button
-                onClick={() => setVisualMode('composite')}
-                className={`px-3 py-1.5 sm:py-1 rounded-full font-medium whitespace-nowrap transition-all ${visualMode === 'composite'
-                  ? 'bg-[#0A0A0B] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-                  }`}
+              {/* Glowing Ambient Background */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] sm:w-[400px] sm:h-[400px] bg-gradient-to-tr from-[#4F6BFF]/30 via-[#20C7B5]/15 to-transparent rounded-full blur-[80px] pointer-events-none z-0" />
+
+              {/* Human Element Editorial Portrait Card */}
+              <div 
+                className={`absolute left-2 sm:left-12 lg:left-16 top-1/2 -translate-y-1/2 w-[130px] sm:w-[200px] lg:w-[240px] h-[200px] sm:h-[300px] lg:h-[340px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/60 z-10 group transition-all duration-1000 transform ${
+                  isVisible ? 'opacity-100 translate-y-[-50%] scale-100' : 'opacity-0 translate-y-[-40%] scale-95'
+                }`}
+                style={{ transitionDelay: '300ms' }}
               >
-                Human + App
-              </button>
-              <button
-                onClick={() => setVisualMode('human-only')}
-                className={`px-3 py-1.5 sm:py-1 rounded-full font-medium whitespace-nowrap transition-all ${visualMode === 'human-only'
-                  ? 'bg-[#0A0A0B] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-                  }`}
-              >
-                Human Portrait
-              </button>
-              <button
-                onClick={() => setVisualMode('app-only')}
-                className={`px-3 py-1.5 sm:py-1 rounded-full font-medium whitespace-nowrap transition-all ${visualMode === 'app-only'
-                  ? 'bg-[#0A0A0B] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-                  }`}
-              >
-                App Only
-              </button>
-            </div>
-
-            {/* Visual Display Container - Increased Mobile Height */}
-            <div className="relative w-full flex items-end sm:items-center justify-center min-h-[480px] sm:min-h-[500px] lg:min-h-[580px]">
-
-              {/* COMPOSITE MODE: Human Element on Left/Back + Smartphone on Foreground */}
-              {visualMode === 'composite' && (
-                <div className="relative w-full max-w-[560px] h-[460px] sm:h-auto flex items-end sm:items-center justify-center">
-
-                  {/* Human Element Editorial Portrait Card */}
-                  <div className="absolute left-0 sm:left-4 lg:left-2 bottom-0 sm:bottom-8 lg:bottom-8 w-[170px] sm:w-[240px] lg:w-[280px] h-[280px] sm:h-[360px] lg:h-[400px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/60 z-10 group">
-                    <img 
-                      src={cardImage} 
-                      alt="MyCredAxis member experiencing seamless credit management"
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover object-top filter brightness-95 group-hover:scale-105 transition-transform duration-700"
-                    />
-
-                    {/* Gradient Overlay for Legibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/85 via-transparent to-black/20" />
-
-                    {/* Floating Floating Stat Badge */}
-                    <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 text-white">
-                      <div className="flex items-center gap-1.5 text-[8px] sm:text-[10px] font-mono text-[#20C7B5] mb-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#20C7B5] animate-pulse" />
-                        <span>REWARDS UNLOCKED</span>
-                      </div>
-                      <p className="font-display font-bold text-[10px] sm:text-xs leading-snug">
-                        "Pay on time. Build healthier credit habits."
-                      </p>
-                      <span className="text-[8px] sm:text-[10px] text-slate-300 mt-1 block">
-                        MyCredAxis
-                      </span>
-                    </div>
+                <img 
+                  src={cardImage} 
+                  alt="MyCredAxis member experiencing seamless credit management"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-top filter brightness-95 group-hover:scale-105 transition-transform duration-700"
+                />
+                {/* Gradient Overlay for Legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/85 via-transparent to-black/20" />
+                {/* Floating Stat Badge */}
+                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 text-white">
+                  <div className="flex items-center gap-1.5 text-[7px] sm:text-[10px] font-mono text-[#20C7B5] mb-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#20C7B5] animate-pulse" />
+                    <span>REWARDS UNLOCKED</span>
                   </div>
+                  <p className="font-bold text-[8px] sm:text-xs leading-snug">
+                    "Pay on time. Build healthier credit habits."
+                  </p>
+                  <span className="text-[7px] sm:text-[10px] text-slate-300 mt-1 block">
+                    MyCredAxis
+                  </span>
+                </div>
+              </div>
 
-                  {/* Smartphone UI Mockup in 3D Angle */}
-                  <div className="absolute right-0 sm:relative sm:right-auto bottom-0 sm:bottom-auto z-20 origin-bottom-right sm:origin-center scale-[0.55] sm:scale-90 lg:scale-100 sm:translate-x-16 lg:translate-x-12 sm:-translate-y-2">
+              {/* Smartphone UI Mockup */}
+              <div 
+                className={`absolute -right-2 sm:right-2 lg:right-6 top-1/2 -translate-y-1/2 z-25 transition-all duration-1000 transform ${
+                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+                }`}
+                style={{ transitionDelay: '500ms' }}
+              >
+                {/* Float Animation Wrapper */}
+                <div className="animate-float">
+                  <div className="scale-[0.48] sm:scale-[0.70] lg:scale-[0.75] origin-center">
                     <SmartphoneMockup perspective="isometric" interactive={false} />
                   </div>
-
                 </div>
-              )}
-
-              {/* HUMAN ONLY MODE */}
-              {visualMode === 'human-only' && (
-                <div className="relative w-full max-w-[460px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
-                  <img
-                    src={cardImage}
-                    alt="MyCredAxis user holding smartphone"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-[380px] md:h-[460px] lg:h-[520px] object-cover object-top"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/90 via-[#0A0A0B]/30 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
-                    <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#20C7B5]">
-                      Confidence in Every Transaction
-                    </span>
-                    <h3 className="font-display font-bold text-xl sm:text-2xl mt-1 text-white">
-                      Your credit and payments, together in one app.
-                    </h3>
-                    <p className="text-[10px] sm:text-xs text-slate-300 mt-2 font-body leading-relaxed">
-                      Manage credit, payments, and rewards in one place.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* APP ONLY MODE */}
-              {visualMode === 'app-only' && (
-                <div className="relative z-10 scale-[0.65] sm:scale-90 lg:scale-100 origin-center mb-6 sm:mb-0">
-                  <SmartphoneMockup perspective="isometric" interactive={true} />
-                </div>
-              )}
+              </div>
 
             </div>
-
           </div>
 
         </div>
