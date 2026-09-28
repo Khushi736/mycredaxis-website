@@ -18,34 +18,37 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans py-12 px-6 sm:px-12 lg:px-24">
-      <div>
+    <div 
+      className="min-h-screen bg-white text-slate-800 py-10 sm:py-16 px-6 sm:px-12 lg:px-24"
+      style={{ fontFamily: "'Poppins', sans-serif" }}
+    >
+      <div >
         
         {/* Navigation Back Link */}
         <button
           onClick={() => onNavigate('home')}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors mb-10 group"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors mb-8 sm:mb-10 group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
           Back to Home
         </button>
 
         {/* Document Header */}
-        <header className="mb-12 pb-8 border-b border-slate-200">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">
+        <header className="mb-10 sm:mb-12 pb-6 sm:pb-8 border-b border-slate-200">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-2 sm:mb-3">
             Terms & Conditions
           </h1>
-          <p className="text-base font-medium text-slate-500">
+          <p className="text-xs sm:text-sm font-medium text-slate-500">
             Last Updated: August 5, 2026
           </p>
         </header>
 
         {/* Document Body Content */}
-        <article className="space-y-12 text-slate-700 leading-relaxed text-base sm:text-lg">
+        <article className="space-y-10 sm:space-y-12 text-slate-700 leading-relaxed text-sm sm:text-base">
           
           {/* Section: Acceptance of Terms */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Acceptance of Terms
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -54,8 +57,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
           </section>
 
           {/* Section: Description of Services */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Description of Services
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -64,8 +67,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
           </section>
 
           {/* Section: Payments and Transactions */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Payments and Transactions
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -74,8 +77,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
           </section>
 
           {/* Section: User Accounts and Security */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               User Accounts and Security
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -84,8 +87,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
           </section>
 
           {/* Section: Credit Score & Reports Disclaimer */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Credit Score & Reports Disclaimer
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -94,8 +97,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
           </section>
 
           {/* Section: Rewards and Promotional Offers */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Rewards and Promotional Offers
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -104,8 +107,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
           </section>
 
           {/* Section: Limitation of Liability */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Limitation of Liability
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -114,8 +117,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
           </section>
 
           {/* Section: Changes to Terms */}
-          <section className="space-y-5 pb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-3 pb-6">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Changes to Terms
             </h2>
             <p className="text-slate-600 leading-relaxed">

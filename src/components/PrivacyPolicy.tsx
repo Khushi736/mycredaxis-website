@@ -18,34 +18,37 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans py-12 px-6 sm:px-12 lg:px-24">
-      <div>
+    <div 
+      className="min-h-screen bg-white text-slate-800 py-10 sm:py-16 px-6 sm:px-12 lg:px-24"
+      style={{ fontFamily: "'Poppins', sans-serif" }}
+    >
+      <div >
         
         {/* Navigation Back Link */}
         <button
           onClick={() => onNavigate('home')}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors mb-10 group"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors mb-8 sm:mb-10 group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
           Back to Home
         </button>
 
         {/* Document Header */}
-        <header className="mb-12 pb-8 border-b border-slate-200">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">
+        <header className="mb-10 sm:mb-12 pb-6 sm:pb-8 border-b border-slate-200">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-2 sm:mb-3">
             Privacy Policy
           </h1>
-          <p className="text-base font-medium text-slate-500">
+          <p className="text-xs sm:text-sm font-medium text-slate-500">
             Effective Date: Sep 16, 2026
           </p>
         </header>
 
         {/* Document Body Content */}
-        <article className="space-y-12 text-slate-700 leading-relaxed text-base sm:text-lg">
+        <article className="space-y-10 sm:space-y-12 text-slate-700 leading-relaxed text-sm sm:text-base">
           
           {/* Section: Introduction */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Introduction
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -58,14 +61,14 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
 
           {/* Section: Information We Collect */}
           <section className="space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Information We Collect
             </h2>
             <p className="text-slate-600">Depending on the services you use, we may collect the following information:</p>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Personal Information</h3>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Personal Information</h3>
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Full Name</li>
                 <li>Mobile Number</li>
                 <li>Email Address (if provided)</li>
@@ -76,10 +79,10 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               </ul>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Identity Verification Information</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Identity Verification Information</h3>
               <p className="text-slate-600">Where required for KYC or regulatory compliance, we may collect information such as:</p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>PAN Number</li>
                 <li>Government ID Information (only where legally permitted and with your consent)</li>
                 <li>Other identity documents required for verification</li>
@@ -88,10 +91,10 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               </ul>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Device Information</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Device Information</h3>
               <p className="text-slate-600">To help secure the platform and improve service performance, we may collect:</p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Device Model</li>
                 <li>Operating System Version</li>
                 <li>App Version</li>
@@ -99,19 +102,19 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               </ul>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Become a Partner</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Become a Partner</h3>
               <p className="text-slate-600 leading-relaxed">
                 If you apply to Become a Partner, we collect business details you enter: business name, business type, owner name, PAN, full address, city, state, pincode, and the modules you select. Email, GST, and extra pincodes are optional. We use this to review your application and, if approved, to show your partner code, commission, referrals, and earnings in the App. There is no in-app payment or fee to submit a partner application.
               </p>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Master Key Pro (formerly Super Key / DLC Device Lock) Information</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Master Key Pro (formerly Super Key / DLC Device Lock) Information</h3>
               <p className="text-slate-600">
                 If you use our Master Key Pro (DLC Device Lock) feature as an authorized merchant or partner, we may collect and process:
               </p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Customer details entered by you, including full name and mobile number</li>
                 <li>Customer device details, including IMEI number(s), manufacturer, and model</li>
                 <li>Device eligibility status from our approved device catalogue</li>
@@ -121,21 +124,21 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
                 <li>Consent status recorded as part of the enrollment process</li>
                 <li>DLC Tokens used to create Master Keys, including token balance before/after creation and related token deduction records. Tokens may be purchased using wallet balance or online payment (Razorpay). Master Key creation consumes tokens from your DLC Token balance rather than a direct INR debit from your main wallet at the moment of key creation (unless otherwise stated in the App).</li>
               </ul>
-              <p className="text-slate-600 leading-relaxed pt-2">
+              <p className="text-slate-600 leading-relaxed pt-1">
                 This information is collected to provide secured device financing and remote device management services that you initiate through the App. In this Privacy Policy, references to &ldquo;Master Key Pro&rdquo;, &ldquo;Master Key&rdquo;, &ldquo;Super Key&rdquo;, or &ldquo;DLC Device Lock&rdquo; mean the same feature unless the context clearly requires otherwise.
               </p>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Promotional Banners and External Links</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Promotional Banners and External Links</h3>
               <p className="text-slate-600 leading-relaxed">
                 The App may display promotional banners on the home screen or other sections. These banners are managed by us and fetched from our servers (/api/banners or dashboard content). For promotional banners, we may process:
               </p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Banner content such as title, description, image, display order, and destination link</li>
                 <li>Basic interaction data such as which banner was shown or tapped, where logged on our servers for analytics and service improvement</li>
               </ul>
-              <p className="text-slate-600 leading-relaxed pt-2">
+              <p className="text-slate-600 leading-relaxed pt-1">
                 When you tap a promotional banner that contains an external link, the App opens the link in your device&apos;s external web browser, such as Chrome or your default browser. The App does not embed those promotional pages inside the App. We do not require extra permissions solely to show promotional banners.
               </p>
               <p className="text-slate-600 leading-relaxed">
@@ -143,17 +146,17 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               </p>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Announcements</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Announcements</h3>
               <p className="text-slate-600 leading-relaxed">
                 We may show in-app announcements (image messages from our servers), similar to promotional banners. We may record when you close or tap an announcement so we can stop showing it again and understand what was opened. If an announcement has a link, tapping it may open that page in your browser. We do not control third-party websites; their own privacy policy applies.
               </p>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Transaction Information</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Transaction Information</h3>
               <p className="text-slate-600">When you use our services, we may collect:</p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Wallet balance and wallet top-up / payment-related details</li>
                 <li>Transaction reference numbers and payment status</li>
                 <li>UPI AutoPay / mandate details, including mandate ID, frequency, amounts, installment / collection / settlement status</li>
@@ -162,32 +165,32 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
                 <li>Payment amounts for paid services, such as credit report fees, Centric fees, DLC Token purchases, and Master Key–related charges, where applicable</li>
                 <li>Reward / points activity and service usage history</li>
               </ul>
-              <p className="text-slate-600 leading-relaxed pt-2">
+              <p className="text-slate-600 leading-relaxed pt-1">
                 Card, UPI, or net-banking credentials are entered on the payment gateway&apos;s secure checkout. We do not store your full card number or CVV on our servers. Bill payment details are collected only if and when those services are made available in the App.
               </p>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Credit Service Information</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Credit Service Information</h3>
               <p className="text-slate-600 leading-relaxed">
                 If you request credit-related services, we may collect and process information required to obtain your credit report or credit score only after obtaining your consent, where applicable.
               </p>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Centric Information</h3>
+            <div className="space-y-3 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Centric Information</h3>
               <p className="text-slate-600 leading-relaxed">
                 Centric is our mobile-number based verification and identity intelligence feature (powered by our technology partner Cashfree). If you use Centric, we collect and process information only after you start the Centric flow, pay the applicable fee (where required), and complete OTP verification with your consent.
               </p>
               <p className="text-slate-600 font-medium">Information you provide for Centric:</p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Full name</li>
                 <li>Mobile number</li>
                 <li>OTP entered by you to complete verification</li>
                 <li>Payment / fee details for the Centric request (wallet, coins, or online payment)</li>
               </ul>
-              <p className="text-slate-600 font-medium pt-2">Information that may be returned by our verification partner after successful OTP verification (depending on partner response and availability):</p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <p className="text-slate-600 font-medium pt-1">Information that may be returned by our verification partner after successful OTP verification (depending on partner response and availability):</p>
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Personal details linked to the verified mobile number (such as name and related identity attributes)</li>
                 <li>Contact details associated with the number (such as phone numbers and email addresses, where available)</li>
                 <li>Identity document-related attributes (for example PAN and, where returned by the partner and permitted, other ID-related details)</li>
@@ -200,12 +203,12 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
           </section>
 
           {/* Section: How We Use Your Information */}
-          <section className="space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-5">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               How We Use Your Information
             </h2>
             <p className="text-slate-600">We use your information to:</p>
-            <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+            <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
               <li>Create and manage your account</li>
               <li>Verify your identity where required</li>
               <li>Provide bill payment and other services when available</li>
@@ -223,10 +226,10 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               <li>Process Centric fees and related refunds where applicable</li>
             </ul>
 
-            <div className="space-y-4 pt-4">
-              <h3 className="text-xl font-semibold text-slate-900">Master Key Pro (formerly Super Key / DLC Device Lock)</h3>
+            <div className="space-y-3 pt-3">
+              <h3 className="text-lg font-semibold text-slate-900">Master Key Pro (formerly Super Key / DLC Device Lock)</h3>
               <p className="text-slate-600">For Master Key Pro (DLC Device Lock), we additionally use information to:</p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Verify whether a customer&apos;s device is eligible for DLC enrollment</li>
                 <li>Register and manage Master Keys for customer devices</li>
                 <li>Enable remote lock, unlock, reminders, unlock codes, and release (unregister) actions that you initiate</li>
@@ -239,10 +242,10 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               </ul>
             </div>
 
-            <div className="space-y-4 pt-4">
-              <h3 className="text-xl font-semibold text-slate-900">Merchant Responsibility</h3>
+            <div className="space-y-3 pt-3">
+              <h3 className="text-lg font-semibold text-slate-900">Merchant Responsibility</h3>
               <p className="text-slate-600">If you register a customer&apos;s device through Master Key Pro, you are responsible for:</p>
-              <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+              <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Obtaining the customer&apos;s informed consent before enrollment</li>
                 <li>Ensuring that the IMEI and customer details entered are accurate</li>
                 <li>Using the Master Key Pro service only for legitimate and authorized purposes</li>
@@ -251,14 +254,14 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
           </section>
 
           {/* Section: Information Sharing */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Information Sharing
             </h2>
             <p className="text-slate-600 leading-relaxed">
               We may share your information only when necessary for providing services or complying with applicable laws. This may include sharing information with:
             </p>
-            <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+            <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
               <li>Authorized payment partners, such as Razorpay (including for wallet top-ups, credit-report fees, AutoPay-related fees, and DLC Token purchases)</li>
               <li>Credit information partners, where applicable</li>
               <li>KYC verification partners</li>
@@ -269,14 +272,14 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               <li>SMS / messaging gateway providers for OTP and service messages</li>
               <li>Verification / identity intelligence partners, including Cashfree, for Centric (name, mobile number, OTP, and verification identifiers)</li>
             </ul>
-            <p className="text-slate-600 leading-relaxed pt-2">
+            <p className="text-slate-600 leading-relaxed pt-1">
               For Master Key Pro, customer name, mobile number, IMEI, device details, and control/action data may be shared with our technology partners solely to deliver the Master Key Pro service you request. Promotional banner destination links may lead to third-party websites operated independently of MyCredAxis. We do not control how those third parties collect or use your information. We do not sell your personal information to third parties.
             </p>
           </section>
 
           {/* Section: Data Security */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Data Security
             </h2>
             <p className="text-slate-600 leading-relaxed">
@@ -288,29 +291,29 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
           </section>
 
           {/* Section: Data Retention */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Data Retention
             </h2>
             <p className="text-slate-600">We retain personal information only for as long as necessary to:</p>
-            <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+            <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
               <li>Provide our services</li>
               <li>Maintain transaction records</li>
               <li>Meet legal, regulatory, or compliance requirements</li>
               <li>Resolve disputes and enforce our agreements</li>
             </ul>
-            <p className="text-slate-600 leading-relaxed pt-2">
+            <p className="text-slate-600 leading-relaxed pt-1">
               Master Key Pro records — including customer IMEI, device details, enrollment status, and action history — may be retained for as long as required to provide the service, meet legal obligations, and resolve disputes. Records for released or unregistered keys may also be retained for audit and compliance purposes.
             </p>
           </section>
 
           {/* Section: Your Rights */}
-          <section className="space-y-5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               Your Rights
             </h2>
             <p className="text-slate-600">Subject to applicable laws, you may:</p>
-            <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+            <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
               <li>Access your personal information</li>
               <li>Request correction of inaccurate information</li>
               <li>Request deletion of information where legally permitted</li>
@@ -320,37 +323,37 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
           </section>
 
           {/* Section: App Permissions */}
-          <section className="space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight pt-4">
+          <section className="space-y-5">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight pt-2">
               App Permissions
             </h2>
             <p className="text-slate-600 leading-relaxed">
               MyCredAxis requests only the device permissions required to operate the App. Below is an explanation of each permission and why it is used.
             </p>
             
-            <div className="space-y-3 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Internet</h3>
+            <div className="space-y-2 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Internet</h3>
               <p className="text-slate-600 leading-relaxed">
                 We use the Internet permission to connect the App to our servers so that you can log in, load your profile, use wallet and payment features, request credit-related services, use Centric, view rewards and games, receive in-app notifications, load promotional banners and announcements, use Master Key Pro (DLC) features, purchase and manage DLC Tokens, save your location, and submit or view a Become a Partner application.
               </p>
             </div>
 
-            <div className="space-y-3 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Location</h3>
+            <div className="space-y-2 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Location</h3>
               <p className="text-slate-600 leading-relaxed">
                 We use the location permissions (approximate / coarse location and precise / fine location) only when the App needs your current place: (1) after login on Home, if your location is not already saved, we may ask you to confirm it; and (2) before you submit KYC, so we can complete identity verification.
               </p>
             </div>
 
-            <div className="space-y-3 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Camera</h3>
+            <div className="space-y-2 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Camera</h3>
               <p className="text-slate-600 leading-relaxed">
                 We use the camera permission only when you choose to take a photo inside the App, such as uploading a profile photograph or capturing documents / images required for KYC or identity verification.
               </p>
             </div>
 
-            <div className="space-y-3 pt-2">
-              <h3 className="text-xl font-semibold text-slate-900">Notifications</h3>
+            <div className="space-y-2 pt-1">
+              <h3 className="text-lg font-semibold text-slate-900">Notifications</h3>
               <p className="text-slate-600 leading-relaxed">
                 We use the notification permission to send you in-app alerts and service-related notifications, such as account, wallet, mandate, or app update messages, where supported on your device.
               </p>
@@ -358,14 +361,14 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
           </section>
 
           {/* Section: Contact Us */}
-          <section className="space-y-4 pt-8 border-t border-slate-200">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+          <section className="space-y-3 pt-6 border-t border-slate-200">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
               Contact Us
             </h2>
             <p className="text-slate-600 leading-relaxed">
               If you have any questions regarding this Privacy Policy or the handling of your personal information, you may contact us:
             </p>
-            <ul className="list-disc pl-6 space-y-3 marker:text-slate-400 text-slate-600">
+            <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
               <li><strong>Product:</strong> MyCredAxis</li>
               <li><strong>Company:</strong> BisaniBrothers Private Limited</li>
               <li><strong>Email:</strong> contact@bisanibrother.com</li>
