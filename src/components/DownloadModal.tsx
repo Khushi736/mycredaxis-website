@@ -71,8 +71,13 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
 
           {/* Badges */}
           <div className="flex flex-col gap-2.5 w-full sm:w-auto items-center sm:items-start">
-            {/* Google Play Button with Real Image Icon */}
-            <div className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#0A0A0B] text-white flex items-center justify-center sm:justify-start gap-3 cursor-pointer hover:bg-slate-900 transition-colors shadow-xs">
+            {/* Google Play Button with Link */}
+            <a 
+              href="https://play.google.com/store/apps/details?id=com.bbpl.mycredaxis"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#0A0A0B] text-white flex items-center justify-center sm:justify-start gap-3 cursor-pointer hover:bg-slate-900 transition-colors shadow-xs"
+            >
               <img 
                 src={playStoreIcon} 
                 alt="Play Store" 
@@ -84,7 +89,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
                 </span>
                 <span className="text-xs font-bold leading-tight">Google Play</span>
               </div>
-            </div>
+            </a>
           </div>
 
         </div>
