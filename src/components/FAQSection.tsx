@@ -77,7 +77,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
         
         {/* Section Header with Scroll Reveal */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
-          <div 
+          {/* <div 
             className={`flex items-center justify-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider transition-all duration-700 transform ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
@@ -87,7 +87,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
             <span className="text-[#4F6BFF]">Support & Clarity</span>
             <span aria-hidden="true">·</span>
             <span>FAQ</span>
-          </div>
+          </div> */}
 
           <h2 
             className={`font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#0A0A0B] tracking-tight transition-all duration-700 transform ${

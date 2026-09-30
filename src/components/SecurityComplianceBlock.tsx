@@ -44,7 +44,7 @@ export const SecurityComplianceBlock: React.FC<{ onNavigateToSecurity?: () => vo
         {/* Section Header */}
         <div className="max-w-3xl mb-10 sm:mb-12">
           {/* Pre-title: Mobile par vertical stack, Desktop par horizontal with dot */}
-          <div 
+          {/* <div 
             className={`flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 transition-all duration-700 transform ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
@@ -53,7 +53,7 @@ export const SecurityComplianceBlock: React.FC<{ onNavigateToSecurity?: () => vo
             <span className="text-[#20C7B5]">Compliance & Architecture</span>
             <span aria-hidden="true" className="hidden sm:block">·</span>
             <span>FireAI Security Pattern</span>
-          </div>
+          </div> */}
 
           <h2 
             className={`font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#0A0A0B] tracking-tight transition-all duration-700 transform ${

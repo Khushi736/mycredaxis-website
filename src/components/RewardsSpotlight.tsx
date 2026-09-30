@@ -52,16 +52,16 @@ export const RewardsSpotlight: React.FC<{ onDownload: () => void }> = ({ onDownl
             }`}
           >
             {/* Fully responsive pre-title */}
-            <div className="inline-flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest">
+            {/* <div className="inline-flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest">
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-[#20C7B5] shrink-0" />
                 <span className="text-[#20C7B5]">Privilege Recognition</span>
               </div>
               <span aria-hidden="true" className="text-slate-600 hidden sm:inline">·</span>
               <span>Discipline-First</span>
-            </div>
+            </div> */}
 
-            <h2 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight">
+            <h2 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight lg:whitespace-nowrap">
               Get Rewarded for Paying On Time.
             </h2>
 

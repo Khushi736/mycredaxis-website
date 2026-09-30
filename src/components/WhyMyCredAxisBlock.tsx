@@ -63,7 +63,7 @@ export const WhyMyCredAxisBlock: React.FC = () => {
         
         {/* Section Header with Scroll Reveal */}
         <div className="max-w-3xl mb-10 sm:mb-14">
-          <div 
+          {/* <div 
             className={`flex items-center gap-2 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 sm:mb-3 transition-all duration-700 transform ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
@@ -72,10 +72,10 @@ export const WhyMyCredAxisBlock: React.FC = () => {
             <span className="text-[#4F6BFF]">Core Differentiators</span>
             <span aria-hidden="true">·</span>
             <span>Why MyCredAxis</span>
-          </div>
+          </div> */}
 
           <h2 
-            className={`font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#0A0A0B] tracking-tight transition-all duration-700 transform ${
+            className={`font-extrabold text-3xl sm:text-4xl lg:whitespace-nowrap lg:text-5xl text-[#0A0A0B] tracking-tight transition-all duration-700 transform ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '200ms' }}

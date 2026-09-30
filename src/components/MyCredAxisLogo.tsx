@@ -24,7 +24,7 @@ export const MyCredAxisEmblem: React.FC<{
       width={size}
       height={size}
       alt="MyCredAxis Emblem"
-      className={`shrink-0 object-contain ${className}`}
+      className={`shrink-0 object-contain rounded-lg ${className}`}
     />
   );
 };

@@ -8,6 +8,7 @@ import { PageRoute } from './types';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { TrustStrip } from './components/TrustStrip';
+import { CentricIdentityReport } from './components/CentricIdentityReport';
 import { ProductSuiteGrid } from './components/ProductSuiteGrid';
 import { RewardsSpotlight } from './components/RewardsSpotlight';
 import { UtilitySpotlight } from './components/UtilitySpotlight';
@@ -104,7 +105,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA] text-[#0A0A0B] selection:bg-[#4F6BFF]/20 selection:text-[#4F6BFF] relative flex flex-col justify-between font-body">
+    <div className="min-h-screen bg-[#F7F8FA] text-[#0A0A0B] selection:bg-[#4F6BFF]/20 selection:text-[#4F6BFF] relative flex flex-col justify-between" style={{ fontFamily: "'Poppins', sans-serif" }}>
       {/* 12-Column Desktop Grid Visualizer */}
       <GridOverlay active={showGrid} />
 
@@ -135,35 +136,38 @@ export default function App() {
 
             {/* 2. Trust Strip */}
             <TrustStrip />
+            
+            {/* 3. Centric Identity Report (FIXED: Passed onOpenContact prop here) */}
+            <CentricIdentityReport onOpenContact={handleOpenContact} />
 
-            {/* 3. Product Suite Grid */}
+            {/* 4. Product Suite Grid */}
             <ProductSuiteGrid onNavigate={handleNavigate} />
 
-            {/* 4. Rewards Spotlight */}
+            {/* 5. Rewards Spotlight */}
             <RewardsSpotlight onDownload={() => setDownloadOpen(true)} />
 
-            {/* 5. Everyday Utility Spotlight */}
+            {/* 6. Everyday Utility Spotlight */}
             <UtilitySpotlight />
 
-            {/* 6. Track Your Money */}
+            {/* 7. Track Your Money */}
             <TrackMoneyBlock onDownload={() => setDownloadOpen(true)} />
 
-            {/* 7. How It Works */}
+            {/* 8. How It Works */}
             <HowItWorksBlock />
 
-            {/* 8. Why MyCredAxis */}
+            {/* 9. Why MyCredAxis */}
             <WhyMyCredAxisBlock />
 
-            {/* 9. Security & Compliance */}
+            {/* 10. Security & Compliance */}
             <SecurityComplianceBlock onNavigateToSecurity={() => handleNavigate('security')} />
 
-            {/* 10. Built for Every Industry */}
+            {/* 11. Built for Every Industry */}
             <IndustryGrid />
 
-            {/* 11. What's Next */}
+            {/* 12. What's Next */}
             <RoadmapTeaser />
 
-            {/* 12. Homepage FAQ */}
+            {/* 13. Homepage FAQ */}
             <FAQSection
               items={HOMEPAGE_FAQS}
               title="Frequently Asked Questions"
@@ -171,7 +175,7 @@ export default function App() {
               onNavigateToFullFaq={() => handleNavigate('faq')}
             />
 
-            {/* 13. Final CTA Banner */}
+            {/* 14. Final CTA Banner */}
             <FinalCTABanner
               onOpenDownload={() => setDownloadOpen(true)}
               onOpenContact={handleOpenContact}
