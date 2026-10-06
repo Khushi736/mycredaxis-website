@@ -102,7 +102,7 @@ export const FeatureCardsSection: React.FC = () => {
 
   return (
     <section id="features" className="py-24 bg-white relative">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="site-container">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
@@ -113,7 +113,7 @@ export const FeatureCardsSection: React.FC = () => {
           </div>
 
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight leading-tight">
-            Designed for total financial clarity, engineered for reliability.
+            Designed for Total Financial Clarity, Engineered for Reliability.
           </h2>
 
           <p className="mt-4 font-body text-base text-slate-600 leading-relaxed">

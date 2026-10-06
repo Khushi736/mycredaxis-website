@@ -6,7 +6,7 @@
 import React from 'react';
 import { MyCredAxisLogo } from './MyCredAxisLogo';
 import { PageRoute } from '../types';
-import { Mail, Phone, Globe } from 'lucide-react';
+import { Mail, Phone, Instagram, Facebook, Youtube, LucideIcon } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (route: PageRoute) => void;
@@ -14,204 +14,170 @@ interface FooterProps {
   onOpenDownload: () => void;
 }
 
+type SocialLink = { label: string; href: string; Icon: LucideIcon };
+
+const socialLinks: SocialLink[] = [
+  { label: 'MyCredAxis on Facebook', href: 'https://www.facebook.com/mycredaxis', Icon: Facebook },
+  { label: 'MyCredAxis on Instagram', href: 'https://www.instagram.com/mycredaxis', Icon: Instagram },
+  { label: 'MyCredAxis on YouTube', href: 'https://www.youtube.com/@mycredaxis', Icon: Youtube },
+];
+
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenContact, onOpenDownload }) => {
+  const year = new Date().getFullYear();
+
   return (
-    <footer 
-      className="bg-[#0A0A0B] text-slate-400 pt-12 pb-8 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-16 border-t border-slate-900 overflow-hidden"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
+    <footer
+      className="site-footer relative bg-[#0A0A0B] text-slate-400 pt-10 pb-6 sm:pt-12 sm:pb-8 lg:pt-16 lg:pb-10 border-t border-white/[0.06] overflow-hidden"
+     
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        
-        {/* Main Footer Sitemap Grid */}
-        <div className="pb-10 sm:pb-12 lg:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 border-b border-white/10 items-start">
-          
-          {/* Left Column: MyCredAxis Logo, Description & Desktop Contact Details */}
-          <div className="lg:col-span-3 space-y-6">
-            <div className="space-y-3.5">
-              <MyCredAxisLogo variant="dark" size="md" />
-              <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
-                Your Credit. Your Payments. One App That Rewards You for Both. Built by Bisani Brother.
-              </p>
-            </div>
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#4F6BFF]/40 to-transparent"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -top-32 right-[10%] w-[min(420px,70vw)] h-[220px] rounded-full bg-[#4F6BFF]/10 blur-[90px]"
+        aria-hidden
+      />
 
-            {/* Contact Details right under paragraph on Desktop / Tablet */}
-            <div className="hidden lg:flex flex-col space-y-3 pt-2 font-mono text-xs">
-              <a
-                href="https://www.mycredaxis.com"
-                className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
-              >
-                <Globe className="w-3.5 h-3.5 text-[#4F6BFF]" />
-                <span>www.mycredaxis.com</span>
-              </a>
-
-              <a
-                href="mailto:support@mycredaxis.com"
-                className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
-              >
-                <Mail className="w-3.5 h-3.5 text-[#20C7B5]" />
-                <span>support@mycredaxis.com</span>
-              </a>
-
-              <a
-                href="tel:+919793649177"
-                className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 text-slate-400" />
-                <span>+91 97936 49177</span>
-              </a>
-            </div>
+      <div className="site-container relative z-10">
+        <div className="footer-main pb-8 sm:pb-10 lg:pb-12 border-b border-white/10">
+          <div className="footer-brand">
+            <MyCredAxisLogo variant="dark" size="md" />
+            <p className="footer-tagline mt-3 text-sm text-slate-400 leading-snug sm:leading-relaxed">
+              Your Credit. Your Payments. One App That Rewards You for Both. Built by Bisani Brother.
+            </p>
           </div>
 
-          {/* Right Column: 2x2 grid on mobile/tablet, 4 columns side-by-side on desktop (lg+) */}
-          <div className="lg:col-span-9 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 text-xs sm:text-sm">
-            
-            {/* Grid 1: Audience */}
-            <div>
-              <h4 className="font-bold text-white uppercase tracking-wider text-[11px] sm:text-xs mb-3.5">
-                Audience
-              </h4>
-              <ul className="space-y-2.5">
+          <nav className="footer-links-grid text-sm" aria-label="Footer navigation">
+            <div className="footer-link-col">
+              <h4 className="footer-col-title">Audience</h4>
+              <ul className="footer-link-list text-slate-400">
                 <li>
-                  <button onClick={() => onNavigate('individuals')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onNavigate('individuals')} className="footer-link">
                     Individuals
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => onNavigate('business')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onNavigate('business')} className="footer-link">
                     Business
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => onNavigate('partners')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onNavigate('partners')} className="footer-link">
                     Partners
                   </button>
                 </li>
                 <li>
-                  <button onClick={onOpenDownload} className="text-[#20C7B5] hover:underline cursor-pointer text-left font-medium">
+                  <button
+                    type="button"
+                    onClick={onOpenDownload}
+                    className="text-[#20C7B5] hover:text-[#5eead4] font-semibold transition-colors cursor-pointer text-left"
+                  >
                     Download App
                   </button>
                 </li>
               </ul>
             </div>
 
-            {/* Grid 2: Product */}
-            <div>
-              <h4 className="font-bold text-white uppercase tracking-wider text-[11px] sm:text-xs mb-3.5">
-                Product
-              </h4>
-              <ul className="space-y-2.5">
-                <li><span className="text-slate-400">Collections</span></li>
-                <li><span className="text-slate-400">Credit Score Check</span></li>
-                <li><span className="text-slate-400">Digital Wallet</span></li>
-                <li><span className="text-slate-400">Master Key Financing</span></li>
-                <li><span className="text-amber-400 text-[11px]">BBPS Bills (Soon)</span></li>
+            <div className="footer-link-col">
+              <h4 className="footer-col-title">Product</h4>
+              <ul className="footer-link-list text-slate-400">
+                <li>Collections</li>
+                <li>Credit Score Check</li>
+                <li>Digital Wallet</li>
+                <li>Master Key Financing</li>
+                <li>BBPS Bills (Soon)</li>
               </ul>
             </div>
 
-            {/* Grid 3: Trust & Support */}
-            <div>
-              <h4 className="font-bold text-white uppercase tracking-wider text-[11px] sm:text-xs mb-3.5">
-                Trust &amp; Support
-              </h4>
-              <ul className="space-y-2.5">
+            <div className="footer-link-col">
+              <h4 className="footer-col-title">Trust &amp; Support</h4>
+              <ul className="footer-link-list text-slate-400">
                 <li>
-                  <button onClick={() => onNavigate('security')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onNavigate('security')} className="footer-link">
                     Security &amp; Compliance
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => onNavigate('faq')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onNavigate('faq')} className="footer-link">
                     Shared FAQ Bank
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => onOpenContact('general')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onOpenContact('general')} className="footer-link">
                     Contact Support
                   </button>
                 </li>
-                <li><span className="text-slate-500">Zero Credential Storage</span></li>
+                <li>Zero Credential Storage</li>
               </ul>
             </div>
 
-            {/* Grid 4: Organization */}
-            <div>
-              <h4 className="font-bold text-white uppercase tracking-wider text-[11px] sm:text-xs mb-3.5">
-                Organization
-              </h4>
-              <ul className="space-y-2.5">
-                <li><span className="text-slate-300">By Bisani Brother</span></li>
-                <li><span className="text-slate-500">Bangalore · Mumbai</span></li>
+            <div className="footer-link-col">
+              <h4 className="footer-col-title">Organization</h4>
+              <ul className="footer-link-list text-slate-400">
+                <li>By Bisani Brother</li>
+                <li>Bangalore · Mumbai</li>
                 <li>
-                  <button onClick={() => onNavigate('privacy-policy')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onNavigate('privacy-policy')} className="footer-link">
                     Privacy Policy
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => onNavigate('terms-conditions')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  <button type="button" onClick={() => onNavigate('terms-conditions')} className="footer-link">
                     Terms and Conditions
                   </button>
                 </li>
               </ul>
             </div>
+          </nav>
 
+          <div className="footer-contact-strip">
+            <h4 className="footer-col-title footer-contact-strip-title">Get in touch</h4>
+            <ul className="footer-contact-items">
+              <li>
+                <a href="mailto:support@mycredaxis.com" className="footer-contact-row">
+                  <span className="footer-contact-icon" aria-hidden>
+                    <Mail className="w-4 h-4" />
+                  </span>
+                  <span className="footer-contact-text">support@mycredaxis.com</span>
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919793649177" className="footer-contact-row">
+                  <span className="footer-contact-icon" aria-hidden>
+                    <Phone className="w-4 h-4" />
+                  </span>
+                  <span className="footer-contact-text">+91 97936 49177</span>
+                </a>
+              </li>
+            </ul>
           </div>
-
         </div>
 
-        {/* Bottom Section: Contact details for mobile (hidden on lg+), Copyright & Social Links */}
-        <div className="pt-6 sm:pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
-          
-          {/* Mobile Contact Details (visible only on mobile/tablet) */}
-          <div className="flex lg:hidden flex-wrap items-center justify-center gap-4 font-mono text-slate-300">
-            <a
-              href="https://www.mycredaxis.com"
-              className="flex items-center gap-1.5 hover:text-white transition-colors"
-            >
-              <Globe className="w-3.5 h-3.5 text-[#4F6BFF]" />
-              <span>www.mycredaxis.com</span>
-            </a>
-
-            <a
-              href="mailto:support@mycredaxis.com"
-              className="flex items-center gap-1.5 hover:text-white transition-colors"
-            >
-              <Mail className="w-3.5 h-3.5 text-[#20C7B5]" />
-              <span>support@mycredaxis.com</span>
-            </a>
-
-            <a
-              href="tel:+919793649177"
-              className="flex items-center gap-1.5 hover:text-white transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-slate-400" />
-              <span>+91 97936 49177</span>
-            </a>
-          </div>
-
-          {/* Copyright */}
-          <p className="text-slate-500 text-center md:text-left hidden lg:block">
-            © {new Date().getFullYear()} MyCredAxis. All rights reserved. By Bisani Brother.
+        <div className="footer-bottom pt-5 sm:pt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-5">
+          <p className="text-xs sm:text-sm text-slate-500 text-center sm:text-left">
+            © {year} MyCredAxis. All rights reserved.{' '}
+            <span className="text-slate-600">By Bisani Brother.</span>
           </p>
 
-          <p className="text-slate-500 text-center block lg:hidden">
-            © {new Date().getFullYear()} MyCredAxis. All rights reserved. By Bisani Brother.
-          </p>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-6 text-slate-400">
-            <span className="hover:text-white transition-colors cursor-pointer">
-              Twitter / X
-            </span>
-            <span className="hover:text-white transition-colors cursor-pointer">
-              LinkedIn
-            </span>
-            <span className="hover:text-white transition-colors cursor-pointer">
-              Instagram
-            </span>
-          </div>
-
+          <nav
+            aria-label="Social media"
+            className="footer-social-row flex flex-wrap items-center justify-center sm:justify-end gap-2"
+          >
+            {socialLinks.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="footer-social-link"
+              >
+                <Icon className="w-[1.05rem] h-[1.05rem]" strokeWidth={2} aria-hidden />
+              </a>
+            ))}
+          </nav>
         </div>
-
       </div>
     </footer>
   );

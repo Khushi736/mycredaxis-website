@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MyCredAxisLogo } from './MyCredAxisLogo';
 import { PageRoute } from '../types';
-import { ArrowUpRight, Menu, X, Download, UserCheck } from 'lucide-react';
+import { Menu, X, Download } from 'lucide-react';
 
 interface NavbarProps {
   currentRoute: PageRoute;
@@ -23,16 +23,35 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 15);
+      setScrolled(window.scrollY > 12);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Wise pattern: Audience-first navigation items
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (mobileMenuOpen) return;
+    const panel = mobileNavRef.current;
+    const active = document.activeElement;
+    if (panel && active instanceof HTMLElement && panel.contains(active)) {
+      active.blur();
+      menuToggleRef.current?.focus({ preventScroll: true });
+    }
+  }, [mobileMenuOpen]);
+
   const navItems: { label: string; route: PageRoute }[] = [
     { label: 'Individuals', route: 'individuals' },
     { label: 'Business', route: 'business' },
@@ -41,140 +60,138 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'FAQ', route: 'faq' },
   ];
 
+  const closeMobile = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs py-3'
-          : 'bg-[#F7F8FA]/90 backdrop-blur-xs py-4.5'
-      }`}
+      className={`site-header fixed top-0 left-0 right-0 z-40 ${scrolled ? 'site-header--scrolled' : ''}`}
+     
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-        
-        {/* Brand Logo - clicks to homepage */}
+      <div className="site-header-glow pointer-events-none" aria-hidden />
+
+      <div className="site-container site-header-inner">
         <button
+          type="button"
           onClick={() => onNavigate('home')}
-          className="text-left cursor-pointer transition-opacity hover:opacity-90"
+          className="site-header-logo shrink-0 text-left cursor-pointer"
+          aria-label="MyCredAxis home"
         >
           <MyCredAxisLogo size="md" variant="light" />
         </button>
 
-        {/* Desktop Wise-Style Audience Navigation */}
-        <nav className="hidden md:flex items-center gap-7">
+        <nav className="site-header-nav hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Primary">
           {navItems.map((item) => {
             const isActive = currentRoute === item.route;
             return (
               <button
                 key={item.route}
+                type="button"
                 onClick={() => onNavigate(item.route)}
-                className={`text-sm font-medium transition-colors relative py-1 cursor-pointer ${
-                  isActive
-                    ? 'text-[#0A0A0B] font-bold'
-                    : 'text-slate-600 hover:text-[#0A0A0B]'
-                }`}
+                className={`site-nav-link ${isActive ? 'site-nav-link--active' : ''}`}
               >
-                {item.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4F6BFF] rounded-full animate-in fade-in" />
-                )}
+                <span>{item.label}</span>
               </button>
             );
           })}
         </nav>
 
-        {/* Right Action Buttons: [Log In] and [Download the App] */}
-        <div className="hidden sm:flex items-center gap-3">
-          <button
-            onClick={onOpenLogIn}
-            className="px-4 py-2 rounded-full text-xs font-semibold text-slate-700 hover:text-slate-950 hover:bg-white/80 border border-slate-200/80 transition-all cursor-pointer"
-          >
-            Log In
-          </button>
-
-          <button
-            onClick={onOpenDownload}
-            className="group relative inline-flex items-center gap-1.5 px-4.5 py-2 rounded-full bg-[#0A0A0B] hover:bg-slate-900 active:scale-98 text-white text-xs font-semibold tracking-wide transition-all shadow-xs hover:shadow-md cursor-pointer"
-          >
-            <Download className="w-3.5 h-3.5 text-[#20C7B5]" />
-            <span>Download the App</span>
-          </button>
-        </div>
-
-        {/* Mobile menu trigger */}
-        <div className="flex md:hidden items-center gap-2">
-          <button
-            onClick={onOpenDownload}
-            className="p-2 rounded-full bg-[#0A0A0B] text-white text-xs"
-            title="Download App"
-          >
-            <Download className="w-4 h-4 text-[#20C7B5]" />
-          </button>
-
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-700 hover:text-slate-900"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-6 py-5 shadow-xl flex flex-col h-[calc(100vh-75px)] overflow-y-auto">
-          <nav className="flex flex-col space-y-3 flex-1">
-            <button
-              onClick={() => {
-                onNavigate('home');
-                setMobileMenuOpen(false);
-              }}
-              className="text-left text-sm font-bold text-slate-900 py-1.5"
-            >
-              Home 
+        <div className="site-header-actions">
+          <div className="hidden lg:flex items-center gap-2.5">
+            <button type="button" onClick={onOpenLogIn} className="site-nav-login">
+              Log In
             </button>
 
-            {navItems.map((item) => (
+            <button type="button" onClick={onOpenDownload} className="site-nav-cta group">
+              <Download className="w-3.5 h-3.5 text-[#20C7B5] shrink-0 transition-transform duration-300 group-hover:scale-110" />
+              <span>Download the App</span>
+            </button>
+          </div>
+
+          <div className="flex lg:hidden items-center gap-2">
+            <button
+              type="button"
+              onClick={onOpenDownload}
+              className="site-nav-cta-icon"
+              title="Download the App"
+              aria-label="Download the App"
+            >
+              <Download className="w-4 h-4 text-[#20C7B5]" />
+            </button>
+
+            <button
+              ref={menuToggleRef}
+              type="button"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              className="site-nav-menu-toggle"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="site-mobile-nav"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`site-mobile-backdrop lg:hidden ${mobileMenuOpen ? 'site-mobile-backdrop--open' : ''}`}
+        onClick={closeMobile}
+        aria-hidden
+      />
+
+      <div
+        ref={mobileNavRef}
+        id="site-mobile-nav"
+        className={`site-mobile-panel lg:hidden ${mobileMenuOpen ? 'site-mobile-panel--open' : ''}`}
+        aria-hidden={mobileMenuOpen ? undefined : true}
+        inert={mobileMenuOpen ? undefined : true}
+      >
+        <div className="site-container site-mobile-panel-inner">
+          <nav className="flex flex-col gap-1" aria-label="Mobile primary">
+            <button
+              type="button"
+              onClick={() => {
+                onNavigate('home');
+                closeMobile();
+              }}
+              className={`site-mobile-link ${currentRoute === 'home' ? 'site-mobile-link--active' : ''}`}
+              style={{ transitionDelay: mobileMenuOpen ? '40ms' : '0ms' }}
+            >
+              Home
+            </button>
+
+            {navItems.map((item, index) => (
               <button
                 key={item.route}
+                type="button"
                 onClick={() => {
                   onNavigate(item.route);
-                  setMobileMenuOpen(false);
+                  closeMobile();
                 }}
-                className={`text-left text-sm py-1.5 ${
-                  currentRoute === item.route
-                    ? 'font-bold text-[#4F6BFF]'
-                    : 'font-medium text-slate-700 hover:text-[#4F6BFF]'
-                }`}
+                className={`site-mobile-link ${currentRoute === item.route ? 'site-mobile-link--active' : ''}`}
+                style={{ transitionDelay: mobileMenuOpen ? `${80 + index * 35}ms` : '0ms' }}
               >
                 {item.label}
               </button>
             ))}
-
-            <div className="pt-4 border-t border-slate-100 flex flex-col gap-2 mt-auto pb-4">
-              <button
-                onClick={() => {
-                  onOpenLogIn();
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full py-2.5 rounded-xl border border-slate-200 text-slate-800 text-xs font-semibold text-center"
-              >
-                Log In
-              </button>
-              <button
-                onClick={() => {
-                  onOpenDownload();
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full py-2.5 rounded-xl bg-[#0A0A0B] text-white text-xs font-semibold text-center flex items-center justify-center gap-2"
-              >
-                <Download className="w-4 h-4 text-[#20C7B5]" />
-                <span>Download the App</span>
-              </button>
-            </div>
           </nav>
+
+          <div className="site-mobile-actions">
+            <button
+              type="button"
+              onClick={() => {
+                onOpenLogIn();
+                closeMobile();
+              }}
+              className="site-nav-login w-full justify-center"
+            >
+              Log In
+            </button>
+          </div>
         </div>
-      )}
+      </div>
     </header>
   );
 };

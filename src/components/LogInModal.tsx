@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, Lock, Smartphone, Check, ArrowRight } from 'lucide-react';
 import { MyCredAxisLogo } from './MyCredAxisLogo';
 
@@ -16,6 +16,15 @@ export const LogInModal: React.FC<LogInModalProps> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState<'phone' | 'otp' | 'success'>('phone');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -34,8 +43,8 @@ export const LogInModal: React.FC<LogInModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="relative w-full max-w-md bg-white rounded-3xl border border-slate-200 shadow-2xl p-7 animate-in fade-in zoom-in-95 duration-200">
+    <div className="app-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+      <div className="app-modal-panel app-modal-panel--md bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl p-5 sm:p-7 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Close Button */}
         <button
@@ -49,7 +58,7 @@ export const LogInModal: React.FC<LogInModalProps> = ({ isOpen, onClose }) => {
           <div className="flex justify-center mb-3">
             <MyCredAxisLogo size="sm" />
           </div>
-          <h3 className="font-display font-extrabold text-2xl text-[#0A0A0B]">
+          <h3 id="login-modal-title" className="font-display font-extrabold text-xl sm:text-2xl text-[#0A0A0B]">
             {step === 'success' ? 'Welcome Back' : 'Log in to MyCredAxis'}
           </h3>
           <p className="text-xs text-slate-500 mt-1 font-body">

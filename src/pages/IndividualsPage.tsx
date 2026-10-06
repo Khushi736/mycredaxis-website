@@ -3,9 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { usePageReveal } from '../hooks/usePageReveal';
 import { SmartphoneMockup } from '../components/SmartphoneMockup';
 import { FAQSection } from '../components/FAQSection';
+import { PageShell } from '../components/PageShell';
+import { PageHero } from '../components/PageHero';
+import { StepsFlowSection, type StepsFlowStep } from '../components/StepsFlowSection';
+import { CentricForIndividualsSection } from '../components/CentricForIndividualsSection';
+import { CirProfileMockupCard } from '../components/CirProfileMockupCard';
 import { INDIVIDUAL_FAQS } from '../data/faqData';
 import {
   Download,
@@ -17,37 +23,53 @@ import {
   ShieldCheck,
   Lock,
   ArrowRight,
-  Clock,
   CheckCircle2,
-  Check
+  UserCheck,
+  LineChart,
+  Receipt,
+  ScanFace,
+  ArrowLeftRight,
 } from 'lucide-react';
 
 interface IndividualsPageProps {
   onOpenDownload: () => void;
+  onOpenContact: (type?: 'individual' | 'business' | 'partner' | 'general') => void;
 }
 
-export const IndividualsPage: React.FC<IndividualsPageProps> = ({ onOpenDownload }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+export const IndividualsPage: React.FC<IndividualsPageProps> = ({ onOpenDownload, onOpenContact }) => {
+  const { ref: comingSoonRef, isVisible: comingSoonVisible } = usePageReveal(0.1);
+  const { ref: dataConsentRef, isVisible: dataConsentVisible } = usePageReveal(0.12);
+  const { ref: downloadCtaRef, isVisible: downloadCtaVisible } = usePageReveal(0.12);
 
-  // Scroll reveal observer for smooth entry animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05 }
-    );
+  const dataConsentTrustPoints = [
+    { icon: ShieldCheck, label: 'No stored banking credentials' },
+    { icon: CheckCircle2, label: 'Bank-verified before any debit' },
+    { icon: Lock, label: 'Credit checks only with your consent' },
+  ];
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const comingSoonItems = [
+    {
+      title: 'Bill Payments via BBPS',
+      desc: 'Electricity, water, gas, telecom, DTH, insurance, and even traffic challans, in one place.',
+      icon: Receipt,
+      iconBg: 'bg-[#EEF2FF]',
+      iconColor: 'text-[#4F6BFF]',
+    },
+    {
+      title: 'Cash Without a Card',
+      desc: '[Biometric ID Redacted]-based biometric cash withdrawal (AePS).',
+      icon: ScanFace,
+      iconBg: 'bg-[#ECFDF5]',
+      iconColor: 'text-[#20C7B5]',
+    },
+    {
+      title: 'Cash-to-Bank Transfer',
+      desc: 'Deposit cash at a partner shop for transfer to a bank account in India via DMT/IMPS.',
+      icon: ArrowLeftRight,
+      iconBg: 'bg-amber-50',
+      iconColor: 'text-amber-600',
+    },
+  ];
 
   const capabilities = [
     {
@@ -80,104 +102,141 @@ export const IndividualsPage: React.FC<IndividualsPageProps> = ({ onOpenDownload
     },
   ];
 
-  return (
-    <div 
-      ref={sectionRef}
-      className="pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden bg-white"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
-    >
-      
-      {/* 1. Hero Section for Individuals (Balanced Layout & Scaled Down Mockup) */}
-      <section className="pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-12 px-6 lg:px-12 max-w-7xl mx-auto relative">
-        <div className="absolute top-0 right-10 w-[250px] h-[250px] bg-[#4F6BFF]/10 rounded-full blur-[80px] pointer-events-none" />
+  const rewardPillars = [
+    {
+      title: 'Credit Health',
+      desc: 'Every on-time payment works toward your credit health.',
+      icon: Gauge,
+      color: '#20C7B5',
+      iconBg: 'bg-[#20C7B5]/15',
+      cardClass: 'reward-pillar-card--teal',
+    },
+    {
+      title: 'Rewards',
+      desc: 'Get recognized for staying on top of your payments.',
+      icon: Award,
+      color: '#4F6BFF',
+      iconBg: 'bg-[#4F6BFF]/15',
+      cardClass: 'reward-pillar-card--indigo',
+    },
+    {
+      title: 'Good Habits',
+      desc: 'Rewards recognize on-time payments, not just spending.',
+      icon: Sparkles,
+      color: '#FBBF24',
+      iconBg: 'bg-amber-500/15',
+      cardClass: 'reward-pillar-card--amber',
+    },
+  ];
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
-          
-          {/* Left Content Column: Given more width (col-span-7) to balance the smaller phone */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5 lg:pr-6">
-            <h1 
-              className={`font-extrabold text-3xl sm:text-4xl lg:text-[46px] leading-[1.15] text-[#0A0A0B] tracking-tight transition-all duration-700 transform ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: '100ms' }}
-            >
-              Pay Smarter. Get Rewarded.{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] to-[#20C7B5] block sm:inline mt-1 sm:mt-0">
+  const peaceSteps: StepsFlowStep[] = [
+    {
+      num: '01',
+      title: 'Sign up & verify with digital KYC',
+      desc: 'Complete digital KYC to get started.',
+      icon: UserCheck,
+      color: '#4F6BFF',
+    },
+    {
+      num: '02',
+      title: 'Set up your wallet or payment mandate',
+      desc: 'Link your primary bank account with bank-authenticated consent.',
+      icon: Wallet,
+      color: '#20C7B5',
+    },
+    {
+      num: '03',
+      title: 'Pay bills, EMIs, and manage credit',
+      desc: 'Manage your payments and credit in one app.',
+      icon: CalendarCheck,
+      color: '#4F6BFF',
+    },
+    {
+      num: '04',
+      title: 'Track everything in real time',
+      desc: 'See what is due and what is already paid.',
+      icon: LineChart,
+      color: '#20C7B5',
+    },
+    {
+      num: '05',
+      title: 'Get rewarded for staying on schedule',
+      desc: 'Get recognized for paying on time.',
+      icon: Award,
+      color: '#0A0A0B',
+    },
+  ];
+
+  return (
+    <PageShell>
+      <PageHero
+        stackedHeadline
+        enhanced
+        prominentPhone
+        title={
+          <>
+            <span className="hero-line block text-[#0A0A0B]">Pay Smarter. Get</span>
+            <span className="hero-line block">
+              <span className="text-[#0A0A0B]">Rewarded. </span>
+              <span className="hero-accent text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] via-[#3854E0] to-[#20C7B5] why-heading-accent">
                 Bank Simpler.
               </span>
-            </h1>
-
-            <p 
-              className={`text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl transition-all duration-700 transform ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: '200ms' }}
-            >
-              Check your credit, manage your wallet, and pay every bill & EMI — all from one app that recognizes you for staying on top of your money.
-            </p>
-
-            {/* Primary Download CTAs */}
-            <div 
-              className={`pt-1 flex flex-wrap items-center gap-3.5 transition-all duration-700 transform ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-              }`}
-              style={{ transitionDelay: '300ms' }}
-            >
-              <button
-                onClick={onOpenDownload}
-                className="inline-flex items-center justify-center w-full sm:w-auto gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 text-white font-semibold text-xs sm:text-sm transition-all shadow-md cursor-pointer group active:scale-98"
-              >
-                <Download className="w-4 h-4 text-[#20C7B5]" />
-                <span>Download the App</span>
-              </button>
-            </div>
-
-            {/* Compliance Badges */}
-            <div 
-              className={`pt-3 border-t border-slate-200 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-semibold text-slate-700 transition-all duration-700 transform ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-14'
-              }`}
-              style={{ transitionDelay: '400ms' }}
-            >
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#20C7B5]" />
-                RBI-Compliant
-              </span>
-              <span aria-hidden="true" className="text-slate-300 hidden sm:inline">·</span>
-              <span className="flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#4F6BFF]" />
-                PCI DSS Certified
-              </span>
-              <span aria-hidden="true" className="text-slate-300 hidden sm:inline">·</span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600" />
-                NPCI Compliant
-              </span>
-            </div>
-          </div>
-
-          {/* Right Phone Mockup Column: Given less width (col-span-5) & Scaled down */}
-          <div 
-            className={`lg:col-span-5 flex justify-center lg:justify-end transition-all duration-1000 transform ${
-              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
-            }`}
-            style={{ transitionDelay: '500ms' }}
+            </span>
+          </>
+        }
+        subtitle="Check your credit, manage your wallet, and pay every bill & EMI — all from one app that recognizes you for staying on top of your money."
+        aside={
+          <SmartphoneMockup
+            perspective="isometric"
+            interactive={false}
+            screen="rewards"
+            className="drop-shadow-xl"
+          />
+        }
+      >
+        <div className="space-y-4">
+          <button
+            type="button"
+            onClick={onOpenDownload}
+            className="site-nav-cta group inline-flex w-full sm:w-auto justify-center"
           >
-            {/* Reduced scale values to make it noticeably smaller, with more negative margin to crop whitespace */}
-            <div className="scale-[0.60] sm:scale-[0.65] lg:scale-[0.70] origin-center -my-12 sm:-my-16 lg:-my-24">
-              <SmartphoneMockup perspective="isometric" interactive={false} />
-            </div>
+            <Download className="w-4 h-4 text-[#20C7B5] shrink-0" />
+            <span>Download the App</span>
+          </button>
+
+          <div className="pt-3 border-t border-slate-200 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-semibold text-slate-700">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#20C7B5]" />
+              RBI-Compliant
+            </span>
+            <span aria-hidden="true" className="text-slate-300 hidden sm:inline">
+              ·
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#4F6BFF]" />
+              PCI DSS Certified
+            </span>
+            <span aria-hidden="true" className="text-slate-300 hidden sm:inline">
+              ·
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600" />
+              NPCI Compliant
+            </span>
           </div>
-
         </div>
-      </section>
+      </PageHero>
 
-      {/* 2. What You Can Do (4 Grid Cards) */}
-      <section className="py-16 sm:py-20 bg-[#F7F8FA] border-y border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="max-w-3xl mb-10 sm:mb-12">
-            <h2 className="font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#0A0A0B] tracking-tight lg:whitespace-nowrap">
-              What you can do with MyCredAxis.
+      <CentricForIndividualsSection onOpenCirLearnMore={() => onOpenContact('general')} />
+
+      <section className="page-section page-section--muted">
+        <div className="site-container">
+          <div className="w-full max-w-none mb-10 sm:mb-14">
+            <h2 className="section-h2 business-capabilities-heading font-extrabold text-[#0A0A0B] tracking-tight">
+              Unlock More With{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] to-[#20C7B5] why-heading-accent">
+                MyCredAxis
+              </span>
             </h2>
           </div>
 
@@ -189,29 +248,23 @@ export const IndividualsPage: React.FC<IndividualsPageProps> = ({ onOpenDownload
               return (
                 <div
                   key={i}
-                  className="fintech-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 bg-white border border-slate-200/90 flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300"
+                  className="fintech-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 bg-white border border-slate-200/90 flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300"
                   style={{ animationFillMode: 'both', animationDelay: `${delay}ms` }}
                 >
-                  <div>
+                  <div className="flex items-start gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                     <div
-                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl ${cap.bg} flex items-center justify-center mb-4 sm:mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3`}
+                      className={`w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl sm:rounded-2xl ${cap.bg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3`}
                       style={{ color: cap.color }}
                     >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:scale-110" />
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:scale-110" />
                     </div>
-
-                    <h3 className="font-bold text-sm sm:text-lg text-[#0A0A0B] transition-colors duration-300 group-hover:text-[#4F6BFF]">
+                    <h3 className="section-h3 font-bold text-[#0A0A0B] leading-snug flex-1 min-w-0 pt-0.5 transition-colors duration-300 group-hover:text-[#4F6BFF]">
                       {cap.title}
                     </h3>
-
-                    <p className="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-slate-600 leading-relaxed">
-                      {cap.desc}
-                    </p>
                   </div>
-
-                  <div className="mt-4 sm:mt-5 pt-3 border-t border-slate-100 text-[9px] sm:text-[11px] font-mono font-medium text-slate-400">
-                    MyCredAxis
-                  </div>
+                  <p className="text-[10px] sm:text-xs text-slate-600 leading-relaxed">
+                    {cap.desc}
+                  </p>
                 </div>
               );
             })}
@@ -219,175 +272,304 @@ export const IndividualsPage: React.FC<IndividualsPageProps> = ({ onOpenDownload
         </div>
       </section>
 
-      {/* 3. Get Rewarded for Paying On Time */}
-      <section className="py-20 sm:py-24 bg-[#0A0A0B] text-white relative overflow-hidden">
+      <section className="page-section page-section--dark relative overflow-hidden">
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#4F6BFF]/15 rounded-full blur-[100px] sm:blur-[140px] pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-          <div className="max-w-3xl space-y-4 mb-10">
-            <h2 className="font-extrabold text-3xl sm:text-4xl text-white tracking-tight lg:whitespace-nowrap">
-              Get Rewarded for Paying On Time.
+        <div className="absolute bottom-0 right-0 w-[280px] sm:w-[420px] h-[280px] sm:h-[420px] bg-[#20C7B5]/10 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="site-container relative z-10">
+          <div className="w-full max-w-none space-y-4 mb-10 sm:mb-14">
+            <h2 className="section-h2 section-h2--long font-extrabold text-white tracking-tight">
+              Pay On Time.{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] to-[#20C7B5] why-heading-accent">
+                Get More Back.
+              </span>
             </h2>
-            <p className="text-xs sm:text-base text-slate-300 leading-relaxed max-w-2xl">
-              Good financial habits deserve more than a pat on the back. Every on-time payment through MyCredAxis works toward your credit health and your rewards — at the same time.
+            <p className="section-lead w-full max-w-none text-slate-300 text-pretty">
+              Build healthier credit habits, strengthen your credit profile, and unlock meaningful rewards simply by
+              staying consistent with your payments.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
-            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] transition-colors">
-              <span className="text-[10px] sm:text-xs font-mono text-[#20C7B5] font-semibold">01 · REPUTATION</span>
-              <h4 className="font-bold text-sm sm:text-base text-white mt-1.5 sm:mt-2">Credit Health</h4>
-              <p className="text-[10px] sm:text-xs text-slate-400 mt-1 sm:mt-2 leading-relaxed">
-                Every on-time payment works toward your credit health.
-              </p>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {rewardPillars.map((pillar) => {
+              const Icon = pillar.icon;
+              return (
+                <article
+                  key={pillar.title}
+                  className={`reward-pillar-card fintech-card-dark group rounded-2xl sm:rounded-3xl p-5 sm:p-7 h-full flex flex-col ${pillar.cardClass}`}
+                >
+                  <div className="flex items-start gap-3 sm:gap-3.5 mb-3 sm:mb-4">
+                    <div
+                      className={`reward-pillar-icon w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-2xl ${pillar.iconBg} flex items-center justify-center ring-1 ring-white/10`}
+                      style={{ color: pillar.color }}
+                    >
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.25} />
+                    </div>
+                    <h3 className="section-h3 font-bold text-white leading-snug min-w-0 flex-1 pt-1 group-hover:text-white/95 transition-colors">
+                      {pillar.title}
+                    </h3>
+                  </div>
 
-            <div className="p-4 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] transition-colors">
-              <span className="text-[10px] sm:text-xs font-mono text-[#4F6BFF] font-semibold">02 · REWARDS</span>
-              <h4 className="font-bold text-sm sm:text-base text-white mt-1.5 sm:mt-2">Rewards</h4>
-              <p className="text-[10px] sm:text-xs text-slate-400 mt-1 sm:mt-2 leading-relaxed">
-                Get recognized for staying on top of your payments.
-              </p>
-            </div>
-
-            <div className="col-span-2 md:col-span-1 p-4 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] transition-colors">
-              <span className="text-[10px] sm:text-xs font-mono text-amber-400 font-semibold">03 · DISCIPLINE</span>
-              <h4 className="font-bold text-sm sm:text-base text-white mt-1.5 sm:mt-2">Good Habits</h4>
-              <p className="text-[10px] sm:text-xs text-slate-400 mt-1 sm:mt-2 leading-relaxed">
-                Rewards recognize on-time payments, not just spending.
-              </p>
-            </div>
+                  <p className="reward-pillar-desc text-slate-400 flex-1">{pillar.desc}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* 4. How It Works (Individual Flow) */}
-      <section className="py-16 sm:py-24 bg-[#F7F8FA]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="max-w-2xl mb-10 sm:mb-12">
-            <h2 className="font-extrabold text-2xl sm:text-4xl text-[#0A0A0B] tracking-tight lg:whitespace-nowrap">
-              Five simple steps to financial peace.
-            </h2>
-          </div>
+      <StepsFlowSection
+        title="Five Steps toward Financial Freedom"
+        titleAccent="Financial Freedom"
+        titleAlign="left"
+        stepCardLayout="stacked"
+        steps={peaceSteps}
+        consent={{
+          eyebrow: 'Bank Consent Guarantee',
+          body: 'Every payment mandate needs your bank-authenticated approval first. Nothing moves without your consent.',
+          pill: 'Bank-Gateways Verified',
+        }}
+      />
 
-          <div className="space-y-3.5 max-w-3xl">
-            {[
-              { num: '01', title: 'Sign up & verify with digital KYC', desc: 'Complete digital KYC to get started.' },
-              { num: '02', title: 'Set up your wallet or payment mandate', desc: 'Link your primary bank account with bank-authenticated consent.' },
-              { num: '03', title: 'Pay bills, EMIs, and manage credit', desc: 'Manage your payments and credit in one app.' },
-              { num: '04', title: 'Track everything in real time', desc: 'See what is due and what is already paid.' },
-              { num: '05', title: 'Get rewarded for staying on schedule', desc: 'Get recognized for paying on time.' },
-            ].map((step, idx) => (
+      <section ref={comingSoonRef as React.RefObject<HTMLElement>} className="page-section page-section--muted relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-gradient-to-r from-amber-500/8 via-[#4F6BFF]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+        <div className="site-container relative z-10">
+          <header className="w-full mb-10 sm:mb-14">
+            <h2
+              className={`section-h2 font-extrabold text-[#0A0A0B] tracking-tight transition-all duration-1000 transform ${
+                comingSoonVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '120ms' }}
+            >
+              Coming{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] to-[#20C7B5] why-heading-accent">
+                Soon for You.
+              </span>
+            </h2>
+          </header>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 auto-rows-fr">
+            {comingSoonItems.map((item, index) => {
+              const Icon = item.icon;
+              const delay = 280 + index * 120;
+              return (
+                <article
+                  key={item.title}
+                  className={`coming-soon-card fintech-card group rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-slate-200/90 bg-white flex flex-col h-full transition-all duration-700 transform ${
+                    comingSoonVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                  } hover:-translate-y-1.5 hover:shadow-xl hover:border-amber-200/90`}
+                  style={{ transitionDelay: `${delay}ms` }}
+                >
+                  <div className="flex items-start gap-3 sm:gap-3.5 mb-3 sm:mb-4">
+                    <div
+                      className={`coming-soon-card-icon w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl ${item.iconBg} ${item.iconColor} flex items-center justify-center shrink-0 shadow-xs`}
+                      aria-hidden
+                    >
+                      <Icon className="w-5 h-5 sm:w-[1.35rem] sm:h-[1.35rem]" strokeWidth={2.1} />
+                    </div>
+                    <h3 className="section-h3 font-bold text-[#0A0A0B] leading-snug min-w-0 flex-1 pt-0.5 group-hover:text-[#4F6BFF] transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">{item.desc}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section
+        ref={dataConsentRef as React.RefObject<HTMLElement>}
+        className="page-section page-section--dark fx-consent relative overflow-hidden"
+        aria-labelledby="individuals-data-consent-heading"
+      >
+        <div className="data-consent-section-grid pointer-events-none" aria-hidden />
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[min(100%,820px)] h-56 bg-[#20C7B5]/12 blur-[88px] pointer-events-none data-consent-ambient"
+          aria-hidden
+        />
+        <div
+          className="absolute bottom-0 right-[6%] w-72 h-72 bg-[#4F6BFF]/14 blur-[80px] pointer-events-none data-consent-ambient data-consent-ambient--delayed"
+          aria-hidden
+        />
+
+        <div className="site-container relative z-10">
+          <div
+            className={`consent-banner-shell data-consent-panel transition-all duration-1000 transform ${
+              dataConsentVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.98] translate-y-10'
+            }`}
+            style={{ transitionDelay: '100ms' }}
+            role="region"
+            aria-label="Data privacy and consent"
+          >
+            <div className="consent-banner-inner data-consent-inner-pro px-6 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14">
               <div
-                key={step.num}
-                className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex items-start gap-3 sm:gap-4 transition-all hover:shadow-md hover:border-slate-300"
+                className={`data-consent-heading-row flex items-center gap-3.5 sm:gap-5 transition-all duration-1000 ${
+                  dataConsentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '280ms' }}
               >
-                <span className="font-extrabold text-base sm:text-lg text-[#4F6BFF] shrink-0 mt-0.5">
-                  {step.num}
-                </span>
-                <div>
-                  <h4 className="font-bold text-xs sm:text-sm text-[#0A0A0B]">{step.title}</h4>
-                  <p className="text-[10px] sm:text-xs text-slate-600 mt-1 sm:mt-0.5">{step.desc}</p>
+                <div
+                  className={`data-consent-lock consent-shield-wrap shrink-0 transition-all duration-700 ${
+                    dataConsentVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                  }`}
+                  style={{ transitionDelay: '220ms' }}
+                >
+                  <Lock className="w-6 h-6 sm:w-7 sm:h-7" aria-hidden />
                 </div>
+
+                <h2
+                  id="individuals-data-consent-heading"
+                  className="section-h2 font-extrabold text-white mt-0 tracking-tight data-consent-heading min-w-0 flex-1"
+                >
+                  Your Data,{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] to-[#20C7B5] why-heading-accent">
+                    Your Consent.
+                  </span>
+                </h2>
               </div>
-            ))}
-          </div>
 
-          <div className="mt-8 p-4 rounded-2xl bg-white border border-slate-200/90 max-w-3xl text-[11px] sm:text-xs text-slate-700 flex items-start sm:items-center gap-3 shadow-sm">
-            <ShieldCheck className="w-5 h-5 text-[#20C7B5] shrink-0 mt-0.5 sm:mt-0" />
-            <span className="leading-relaxed">
-              <strong>Bank Consent Guarantee:</strong> Every payment mandate needs your bank-authenticated approval first. Nothing moves without your consent.
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Coming Soon for You */}
-      <section className="py-16 sm:py-20 bg-white border-t border-slate-200/80 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-gradient-to-r from-amber-500/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-          <div className="max-w-3xl mb-10">
-            <h2 className="font-extrabold text-2xl sm:text-3xl text-[#0A0A0B] tracking-tight lg:whitespace-nowrap">
-              Coming soon for you.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
-            <div className="p-4 sm:p-6 rounded-2xl bg-[#F7F8FA] border border-slate-200 transition-colors hover:border-amber-300">
-              <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full mb-3">
-                <Clock className="w-3 h-3" /> Coming Soon
-              </span>
-              <h4 className="font-bold text-sm sm:text-base text-[#0A0A0B]">Bill Payments via BBPS</h4>
-              <p className="text-[10px] sm:text-xs text-slate-600 mt-1.5 sm:mt-2 leading-relaxed">
-                Electricity, water, gas, telecom, DTH, insurance, and even traffic challans, in one place.
+              <p
+                className={`data-consent-lead section-lead mt-4 sm:mt-5 text-pretty transition-all duration-1000 ${
+                  dataConsentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '420ms' }}
+              >
+                We never store your banking credentials, and nothing is ever debited without your explicit,
+                bank-verified approval. Your credit checks are consent-based — we only look when you ask us to.
               </p>
-            </div>
 
-            <div className="p-4 sm:p-6 rounded-2xl bg-[#F7F8FA] border border-slate-200 transition-colors hover:border-amber-300">
-              <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full mb-3">
-                <Clock className="w-3 h-3" /> Coming Soon
-              </span>
-              <h4 className="font-bold text-sm sm:text-base text-[#0A0A0B]">Cash Without a Card</h4>
-              <p className="text-[10px] sm:text-xs text-slate-600 mt-1.5 sm:mt-2 leading-relaxed">
-                [Biometric ID Redacted]-based biometric cash withdrawal (AePS).
-              </p>
-            </div>
-
-            <div className="col-span-2 md:col-span-1 p-4 sm:p-6 rounded-2xl bg-[#F7F8FA] border border-slate-200 transition-colors hover:border-amber-300">
-              <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full mb-3">
-                <Clock className="w-3 h-3" /> Coming Soon
-              </span>
-              <h4 className="font-bold text-sm sm:text-base text-[#0A0A0B]">Cash-to-Bank Transfer</h4>
-              <p className="text-[10px] sm:text-xs text-slate-600 mt-1.5 sm:mt-2 leading-relaxed">
-                Deposit cash at a partner shop for transfer to a bank account in India via DMT/IMPS.
-              </p>
+              <ul className="data-consent-trust-grid mt-9 sm:mt-11 list-none p-0 m-0">
+                {dataConsentTrustPoints.map((point, index) => {
+                  const PointIcon = point.icon;
+                  const chipDelay = 520 + index * 110;
+                  return (
+                    <li
+                      key={point.label}
+                      className={`data-consent-trust-card group transition-all duration-700 ${
+                        dataConsentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                      }`}
+                      style={{ transitionDelay: `${chipDelay}ms` }}
+                    >
+                      <div className="data-consent-trust-icon" aria-hidden>
+                        <PointIcon className="w-[1.125rem] h-[1.125rem] sm:w-5 sm:h-5 text-[#20C7B5]" strokeWidth={2.1} />
+                      </div>
+                      <span className="data-consent-trust-label">{point.label}</span>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 6. Your Data, Your Consent Banner */}
-      <section className="py-16 sm:py-20 bg-[#0A0A0B] text-white">
-        <div className="max-w-5xl mx-auto px-6 text-center space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-white/10 text-[#20C7B5] flex items-center justify-center mx-auto mb-3">
-            <Lock className="w-5 h-5" />
-          </div>
-          <h3 className="font-extrabold text-xl sm:text-2xl text-white lg:whitespace-nowrap">
-            Your data, your consent.
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            We never store your banking credentials, and nothing is ever debited without your explicit, bank-verified approval. Your credit checks are consent-based — we only look when you ask us to.
-          </p>
         </div>
       </section>
 
       {/* 7. Individual FAQ */}
       <FAQSection
+        enhanced
+        titleSingleLine
         items={INDIVIDUAL_FAQS}
         title="Frequently Asked Questions for Individuals"
-        subtitle="Clear guidance on checking credit scores, wallet balances, and rewards."
+        titleAccent="for Individuals"
+        subtitle=""
       />
 
-      {/* 8. Download CTA */}
-      <section className="py-16 sm:py-20 bg-white text-center">
-        <div className="max-w-2xl mx-auto px-6 space-y-4">
-          <h2 className="font-extrabold text-2xl sm:text-3xl text-[#0A0A0B] lg:whitespace-nowrap">
-            Ready to experience MyCredAxis?
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            Download the MyCredAxis app and manage your credit, wallet, and payments in one place.
-          </p>
-          <button
-            onClick={onOpenDownload}
-            className="inline-flex items-center gap-2 px-6 sm:px-7 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 active:scale-98 text-white font-semibold text-xs sm:text-sm transition-all shadow-md cursor-pointer mt-2"
+      <section
+        ref={downloadCtaRef as React.RefObject<HTMLElement>}
+        className="page-section page-section--white relative overflow-hidden"
+        aria-labelledby="individuals-download-cta-heading"
+      >
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[min(100%,640px)] h-40 bg-[#4F6BFF]/8 blur-[72px] pointer-events-none"
+          aria-hidden
+        />
+        <div
+          className="absolute bottom-0 right-[8%] w-56 h-56 bg-[#20C7B5]/10 blur-[64px] pointer-events-none page-end-cta-glow"
+          aria-hidden
+        />
+
+        <div className="site-container relative z-10">
+          <div className="page-end-cta-band page-end-cta-band--with-cir">
+          <div
+            className={`page-end-cta-shell transition-all duration-1000 transform ${
+              downloadCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: '100ms' }}
           >
-            <Download className="w-4 h-4 text-[#20C7B5]" />
-            <span>Download MyCredAxis App</span>
-          </button>
+            <div className="page-end-cta-panel page-end-cta-panel--with-cir px-6 py-10 sm:px-10 sm:py-12 lg:py-14">
+              <div className="page-end-cta-panel-main">
+              <h2
+                id="individuals-download-cta-heading"
+                className={`section-h2 font-extrabold text-[#0A0A0B] tracking-tight page-end-cta-title transition-all duration-1000 ${
+                  downloadCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '200ms' }}
+              >
+                Ready to Experience{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] to-[#20C7B5] why-heading-accent">
+                  MyCredAxis?
+                </span>
+              </h2>
+
+              <p
+                className={`section-lead page-end-cta-lead mt-3 sm:mt-4 transition-all duration-1000 ${
+                  downloadCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '320ms' }}
+              >
+                Download the MyCredAxis app and manage your credit, wallet, and payments in one place.
+              </p>
+
+              <div
+                className={`page-end-cta-actions mt-6 sm:mt-8 transition-all duration-1000 ${
+                  downloadCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: '440ms' }}
+              >
+                <button
+                  type="button"
+                  onClick={onOpenDownload}
+                  className="site-nav-cta group inline-flex w-full sm:w-auto justify-center sm:justify-start text-sm sm:text-[0.8125rem] px-5 sm:px-6"
+                >
+                  <Download className="w-4 h-4 text-[#20C7B5] shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                  <span>Download MyCredAxis App</span>
+                </button>
+              </div>
+
+              <div
+                className={`page-end-cta-trust mt-6 sm:mt-7 pt-5 sm:pt-6 border-t border-slate-200/80 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] sm:text-xs font-semibold text-slate-600 transition-all duration-1000 ${
+                  downloadCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '540ms' }}
+              >
+                <span className="inline-flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#20C7B5]" aria-hidden />
+                  RBI-Compliant
+                </span>
+                <span aria-hidden="true" className="text-slate-300 hidden sm:inline">
+                  ·
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#4F6BFF]" aria-hidden />
+                  Rewards on on-time payments
+                </span>
+              </div>
+              </div>
+              <aside className="page-end-cta-panel-aside" aria-label="Centric Identity Report preview">
+                <CirProfileMockupCard
+                  variant="embedded"
+                  onInspectClick={() => onOpenContact('general')}
+                />
+              </aside>
+            </div>
+          </div>
+          </div>
         </div>
       </section>
 
-    </div>
+    </PageShell>
   );
 };

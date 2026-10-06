@@ -32,7 +32,7 @@ export const FinalCTASection: React.FC = () => {
 
           {/* Minimal Headline */}
           <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-[#0A0A0B] tracking-tight max-w-2xl mx-auto leading-tight">
-            Elevate your credit to a whole new axis.
+            Elevate Your Credit to a Whole New Axis.
           </h2>
 
           <p className="font-body text-base text-slate-600 mt-4 max-w-xl mx-auto leading-relaxed">

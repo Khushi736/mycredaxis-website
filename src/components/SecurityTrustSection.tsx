@@ -48,7 +48,7 @@ export const SecurityTrustSection: React.FC = () => {
 
   return (
     <section id="security-trust" className="py-24 bg-white relative">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="site-container">
         
         {/* Section Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-16">
@@ -61,7 +61,7 @@ export const SecurityTrustSection: React.FC = () => {
             </div>
 
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight">
-              Security engineered into every credit byte.
+              Security Engineered Into Every Credit Byte.
             </h2>
 
             <p className="font-body text-base text-slate-600 leading-relaxed max-w-2xl">

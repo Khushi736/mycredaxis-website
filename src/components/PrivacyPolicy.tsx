@@ -19,8 +19,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
 
   return (
     <div 
-      className="min-h-screen bg-white text-slate-800 py-10 sm:py-16 px-6 sm:px-12 lg:px-24"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
+      className="legal-doc-page min-h-screen bg-white text-slate-800 py-10 sm:py-16 px-6 sm:px-12 lg:px-24 overflow-x-clip"
+     
     >
       <div >
         
@@ -52,7 +52,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
               Introduction
             </h2>
             <p className="text-slate-600 leading-relaxed">
-              This Privacy Policy explains how <strong>MyCredAxis</strong> — a next-generation digital finance platform by Newish Technology, a sister concern of Bisani Brothers Pvt. Ltd. — including UPI AutoPay / mandate, wallet, promotional content, Master Key Pro (formerly Super Key / DLC Device Lock), and DLC Tokens (prepaid tokens used to create Master Keys), and Centric (mobile-number verification / identity intelligence service), protects your personal information when you use our mobile application, website, and related services.
+              This Privacy Policy explains how <strong>MyCredAxis</strong> — a next-generation digital finance platform by Newish Technology, a sister concern of Bisani Brothers Pvt. Ltd. — including UPI AutoPay / mandate, wallet, promotional content, Master Key Pro (DLC Device Lock), and DLC Tokens (prepaid tokens used to create Master Keys), and Centric (mobile-number verification / identity intelligence service), protects your personal information when you use our mobile application, website, and related services.
             </p>
             <p className="text-slate-600 leading-relaxed">
               By accessing or using MyCredAxis, you agree to the practices described in this Privacy Policy.
@@ -110,7 +110,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
             </div>
 
             <div className="space-y-3 pt-1">
-              <h3 className="text-lg font-semibold text-slate-900">Master Key Pro (formerly Super Key / DLC Device Lock) Information</h3>
+              <h3 className="text-lg font-semibold text-slate-900">Master Key Pro (DLC Device Lock) Information</h3>
               <p className="text-slate-600">
                 If you use our Master Key Pro (DLC Device Lock) feature as an authorized merchant or partner, we may collect and process:
               </p>
@@ -125,7 +125,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
                 <li>DLC Tokens used to create Master Keys, including token balance before/after creation and related token deduction records. Tokens may be purchased using wallet balance or online payment (Razorpay). Master Key creation consumes tokens from your DLC Token balance rather than a direct INR debit from your main wallet at the moment of key creation (unless otherwise stated in the App).</li>
               </ul>
               <p className="text-slate-600 leading-relaxed pt-1">
-                This information is collected to provide secured device financing and remote device management services that you initiate through the App. In this Privacy Policy, references to &ldquo;Master Key Pro&rdquo;, &ldquo;Master Key&rdquo;, &ldquo;Super Key&rdquo;, or &ldquo;DLC Device Lock&rdquo; mean the same feature unless the context clearly requires otherwise.
+                This information is collected to provide secured device financing and remote device management services that you initiate through the App. In this Privacy Policy, references to &ldquo;Master Key Pro&rdquo;, &ldquo;Master Key&rdquo;, or &ldquo;DLC Device Lock&rdquo; mean the same feature unless the context clearly requires otherwise.
               </p>
             </div>
 
@@ -227,7 +227,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
             </ul>
 
             <div className="space-y-3 pt-3">
-              <h3 className="text-lg font-semibold text-slate-900">Master Key Pro (formerly Super Key / DLC Device Lock)</h3>
+              <h3 className="text-lg font-semibold text-slate-900">Master Key Pro (DLC Device Lock)</h3>
               <p className="text-slate-600">For Master Key Pro (DLC Device Lock), we additionally use information to:</p>
               <ul className="list-disc pl-6 space-y-2 marker:text-slate-400 text-slate-600">
                 <li>Verify whether a customer&apos;s device is eligible for DLC enrollment</li>

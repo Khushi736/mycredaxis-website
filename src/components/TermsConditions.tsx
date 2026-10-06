@@ -19,8 +19,8 @@ export const TermsConditionsPage: React.FC<TermsConditionsPageProps> = ({ onNavi
 
   return (
     <div 
-      className="min-h-screen bg-white text-slate-800 py-10 sm:py-16 px-6 sm:px-12 lg:px-24"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
+      className="legal-doc-page min-h-screen bg-white text-slate-800 py-10 sm:py-16 px-6 sm:px-12 lg:px-24 overflow-x-clip"
+     
     >
       <div >
         

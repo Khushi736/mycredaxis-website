@@ -293,22 +293,22 @@ export const DesignSpecHUD: React.FC<DesignSpecHUDProps> = ({
                 <div className="space-y-3.5">
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
                     <div className="flex items-baseline justify-between border-b border-slate-200 pb-2">
-                      <span className="font-display font-extrabold text-2xl text-slate-900">
-                        Poppins Display 56px/64px
+                      <span className="font-display font-semibold text-2xl text-slate-900">
+                        Poppins Semibold
                       </span>
-                      <span className="text-[10px] font-mono text-slate-400">Hero & Major Titles</span>
+                      <span className="text-[10px] font-mono text-slate-400">Hero & Section Titles</span>
                     </div>
 
                     <div className="flex items-baseline justify-between border-b border-slate-200 pb-2">
-                      <span className="font-display font-bold text-lg text-slate-900">
-                        Poppins Semibold 28px/36px
+                      <span className="font-display font-medium text-lg text-slate-900">
+                        Poppins Medium
                       </span>
-                      <span className="text-[10px] font-mono text-slate-400">Section Headings</span>
+                      <span className="text-[10px] font-mono text-slate-400">Buttons & Labels</span>
                     </div>
 
                     <div className="flex items-baseline justify-between border-b border-slate-200 pb-2">
-                      <span className="font-body font-medium text-sm text-slate-700">
-                        Plus Jakarta Sans Medium 14px/16px
+                      <span className="font-body font-normal text-sm text-slate-700">
+                        Poppins Regular
                       </span>
                       <span className="text-[10px] font-mono text-slate-400">Body & Feature Copy</span>
                     </div>

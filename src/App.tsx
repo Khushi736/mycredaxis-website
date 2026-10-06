@@ -86,12 +86,7 @@ export default function App() {
   // If the Privacy Policy page has its own layout, render it here
   if (currentRoute === 'privacy-policy') {
     return (
-      <PrivacyPolicyPage
-        onNavigate={handleNavigate}
-        onOpenLogIn={() => setLogInOpen(true)}
-        onOpenDownload={() => setDownloadOpen(true)}
-        onOpenContact={handleOpenContact}
-      />
+      <PrivacyPolicyPage onNavigate={handleNavigate} />
     );
   }
 
@@ -105,7 +100,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA] text-[#0A0A0B] selection:bg-[#4F6BFF]/20 selection:text-[#4F6BFF] relative flex flex-col justify-between" style={{ fontFamily: "'Poppins', sans-serif" }}>
+    <div className="font-sans min-h-screen bg-[#F7F8FA] text-[#0A0A0B] selection:bg-[#4F6BFF]/20 selection:text-[#4F6BFF] relative flex flex-col justify-between">
       {/* 12-Column Desktop Grid Visualizer */}
       <GridOverlay active={showGrid} />
 
@@ -124,7 +119,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1">
+      <main className="flex-1 min-w-0 overflow-x-clip">
         {currentRoute === 'home' && (
           <>
             {/* 1. Hero Section */}
@@ -170,8 +165,9 @@ export default function App() {
             {/* 13. Homepage FAQ */}
             <FAQSection
               items={HOMEPAGE_FAQS}
-              title="Frequently Asked Questions"
-              subtitle="Quick answers to common questions about MyCredAxis."
+              title="Frequently Asked Questions about MyCredAxis."
+              titleAccent="MyCredAxis."
+              subtitle=""
               onNavigateToFullFaq={() => handleNavigate('faq')}
             />
 
@@ -185,7 +181,10 @@ export default function App() {
 
         {/* /individuals Page */}
         {currentRoute === 'individuals' && (
-          <IndividualsPage onOpenDownload={() => setDownloadOpen(true)} />
+          <IndividualsPage
+            onOpenDownload={() => setDownloadOpen(true)}
+            onOpenContact={handleOpenContact}
+          />
         )}
 
         {/* /business Page */}

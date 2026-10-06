@@ -62,7 +62,7 @@ export const ProcessFlowSection: React.FC = () => {
 
   return (
     <section id="process-flow" className="py-24 bg-[#F7F8FA] relative border-t border-slate-200/80">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="site-container">
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -73,7 +73,7 @@ export const ProcessFlowSection: React.FC = () => {
           </div>
 
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight">
-            How MyCredAxis synchronizes your financial life.
+            How MyCredAxis Synchronizes Your Financial Life.
           </h2>
 
           <p className="font-body text-base text-slate-600 leading-relaxed">

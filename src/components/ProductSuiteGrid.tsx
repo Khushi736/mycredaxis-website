@@ -81,10 +81,10 @@ export const ProductSuiteGrid: React.FC<ProductSuiteGridProps> = ({ onNavigate }
     <section 
       id="product-suite" 
       ref={sectionRef}
-      className="py-16 sm:py-20 lg:py-24 bg-white border-b border-slate-200/80 overflow-hidden"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
+      className="fx-suite py-16 sm:py-20 lg:py-24 bg-white border-b border-slate-200/80 overflow-hidden"
+     
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="site-container">
         
         {/* Section Header with Smooth Scroll Reveal */}
         <div className="max-w-3xl mb-10 sm:mb-12">
@@ -94,7 +94,10 @@ export const ProductSuiteGrid: React.FC<ProductSuiteGridProps> = ({ onNavigate }
             }`}
             style={{ transitionDelay: '100ms' }}
           >
-            Simple money, smarter moves.
+            Simple Money,{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] to-[#20C7B5] why-heading-accent">
+              Smarter Moves.
+            </span>
           </h2>
 
           <p 

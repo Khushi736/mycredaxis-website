@@ -3,50 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { usePageReveal } from '../hooks/usePageReveal';
 import { FAQSection } from '../components/FAQSection';
+import { PageShell } from '../components/PageShell';
+import { PageHero } from '../components/PageHero';
+import { SmartphoneMockup } from '../components/SmartphoneMockup';
+import { StepsFlowSection, type StepsFlowStep } from '../components/StepsFlowSection';
+import { CentricForBusinessSection } from '../components/CentricForBusinessSection';
+import { CirProfileMockupCard } from '../components/CirProfileMockupCard';
 import { BUSINESS_FAQS } from '../data/faqData';
 import {
   Building2,
-  TrendingDown,
   RotateCw,
   BarChart3,
   UserCheck,
   MessageSquare,
   ShieldCheck,
-  KeyRound,
   ArrowRight,
   CheckCircle2,
   Lock,
-  Send
+  LineChart,
 } from 'lucide-react';
 
 interface BusinessPageProps {
-  onOpenContact: (type?: 'individual' | 'business' | 'partner') => void;
+  onOpenContact: (type?: 'individual' | 'business' | 'partner' | 'general') => void;
 }
 
 export const BusinessPage: React.FC<BusinessPageProps> = ({ onOpenContact }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  // Scroll reveal observer for smooth entry animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: capabilitiesRef, isVisible: capabilitiesVisible } = usePageReveal(0.08);
+  const { ref: outcomesRef, isVisible: outcomesVisible } = usePageReveal(0.1);
+  const { ref: contactCtaRef, isVisible: contactCtaVisible } = usePageReveal(0.12);
 
   const capabilities = [
     {
@@ -54,24 +41,28 @@ export const BusinessPage: React.FC<BusinessPageProps> = ({ onOpenContact }) => 
       desc: 'Bank-authorized recurring payments for EMIs, subscriptions, and dealer receivables via e-NACH and UPI Autopay.',
       icon: RotateCw,
       color: '#4F6BFF',
+      bg: 'bg-[#EEF2FF]',
     },
     {
       title: 'Real-Time MIS & Analytics',
       desc: 'Get visibility into collections and cash flow through real-time dashboards.',
       icon: BarChart3,
       color: '#20C7B5',
+      bg: 'bg-[#ECFDF5]',
     },
     {
       title: 'Merchant & Dealer Onboarding',
       desc: 'Quick digital KYC to onboard merchants and dealers.',
       icon: UserCheck,
       color: '#0A0A0B',
+      bg: 'bg-slate-100',
     },
     {
       title: 'Smart Payment Reminders',
       desc: 'Automated reminders through WhatsApp, SMS, email, and IVR before a payment is late.',
       icon: MessageSquare,
       color: '#8B5CF6',
+      bg: 'bg-[#F5F3FF]',
     },
   ];
 
@@ -82,230 +73,295 @@ export const BusinessPage: React.FC<BusinessPageProps> = ({ onOpenContact }) => 
     'Easier scaling as your customer base grows',
   ];
 
+  const receivablesSteps: StepsFlowStep[] = [
+    {
+      num: '01',
+      title: 'Onboard',
+      desc: 'Complete merchant onboarding.',
+      icon: UserCheck,
+      color: '#4F6BFF',
+    },
+    {
+      num: '02',
+      title: 'Set Up Mandates',
+      desc: 'Set up bank-authorized payment mandates.',
+      icon: RotateCw,
+      color: '#20C7B5',
+    },
+    {
+      num: '03',
+      title: 'Process Payments',
+      desc: 'Payments and collections are processed automatically.',
+      icon: BarChart3,
+      color: '#4F6BFF',
+    },
+    {
+      num: '04',
+      title: 'Track in Real Time',
+      desc: 'Track collections in real time.',
+      icon: LineChart,
+      color: '#20C7B5',
+    },
+    {
+      num: '05',
+      title: 'Get Paid Reliably',
+      desc: 'Get paid reliably every cycle.',
+      icon: CheckCircle2,
+      color: '#0A0A0B',
+    },
+  ];
+
   return (
-    <div 
-      ref={sectionRef}
-      className="pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-hidden bg-[#F7F8FA]"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
-    >
-      
-      {/* 1. Hero Section for Business with Rich Background Glow */}
-      <section className="pt-6 pb-12 sm:pt-8 sm:pb-16 lg:pt-12 lg:pb-20 px-6 lg:px-12 max-w-7xl mx-auto relative">
-        {/* Soft decorative color spread */}
-        <div className="absolute top-0 right-10 w-[350px] h-[350px] bg-[#4F6BFF]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-[300px] h-[300px] bg-[#20C7B5]/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-3xl space-y-5 sm:space-y-6 relative z-10">
-
-          {/* Title */}
-          <h1 
-            className={`font-extrabold text-3xl sm:text-5xl lg:text-[52px] leading-[1.12] text-[#0A0A0B] tracking-tight transition-all duration-700 transform ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{ transitionDelay: '100ms' }}
+    <PageShell>
+      <PageHero
+        stackedHeadline
+        enhanced
+        prominentPhone
+        title={
+          <>
+            <span className="hero-line hero-line--single block text-[#0A0A0B]">
+              Get Paid On Time, Every{' '}
+              <span className="hero-accent text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] via-[#3854E0] to-[#20C7B5] why-heading-accent">
+                Time.
+              </span>
+            </span>
+          </>
+        }
+        subtitle="Automate collections, reduce manual follow-up, and get full visibility into your cash flow — without adding headcount."
+        aside={
+          <SmartphoneMockup
+            perspective="isometric"
+            interactive={false}
+            screen="mandate"
+            className="drop-shadow-xl"
+          />
+        }
+      >
+        <div className="space-y-4">
+          <button
+            type="button"
+            onClick={() => onOpenContact('business')}
+            className="site-nav-cta group inline-flex w-full sm:w-auto justify-center"
           >
-            Get Paid On Time, Every Time.
-          </h1>
+            <span>Talk to Our Team / Request a Demo</span>
+            <ArrowRight className="w-4 h-4 text-[#20C7B5] transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
 
-          {/* Subtitle */}
-          <p 
-            className={`text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed max-w-2xl transition-all duration-700 transform ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-            style={{ transitionDelay: '200ms' }}
-          >
-            Automate collections, reduce manual follow-up, and get full visibility into your cash flow — without adding headcount.
-          </p>
-
-          {/* CTA */}
-          <div 
-            className={`pt-1 flex flex-wrap items-center gap-4 transition-all duration-700 transform ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-            }`}
-            style={{ transitionDelay: '300ms' }}
-          >
-            <button
-              onClick={() => onOpenContact('business')}
-              className="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 text-white font-semibold text-xs sm:text-sm transition-all shadow-md cursor-pointer w-full sm:w-auto justify-center group active:scale-98"
-            >
-              <span>Talk to Our Team / Request a Demo</span>
-              <ArrowRight className="w-4 h-4 text-[#20C7B5] transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
-          </div>
-
-          {/* Institutional Compliance Badges */}
-          <div 
-            className={`pt-4 border-t border-slate-200/80 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-semibold text-slate-700 transition-all duration-700 transform ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-14'
-            }`}
-            style={{ transitionDelay: '450ms' }}
-          >
+          <div className="pt-4 border-t border-slate-200/80 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-semibold text-slate-700">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#20C7B5]" />
               RBI-Compliant Framework
             </span>
-            <span aria-hidden="true" className="text-slate-300 hidden sm:inline">·</span>
+            <span aria-hidden="true" className="text-slate-300 hidden sm:inline">
+              ·
+            </span>
             <span className="flex items-center gap-1.5">
               <Lock className="w-4 h-4 text-[#4F6BFF]" />
               PCI DSS Certified
             </span>
-            <span aria-hidden="true" className="text-slate-300 hidden sm:inline">·</span>
+            <span aria-hidden="true" className="text-slate-300 hidden sm:inline">
+              ·
+            </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               NPCI Compliant
             </span>
           </div>
-
         </div>
-      </section>
+      </PageHero>
 
-      {/* 2. The Problem (Fixed layout overlap & added subtle background spread) */}
-      <section className="py-16 sm:py-20 bg-white border-y border-slate-200/80 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-gradient-to-r from-rose-500/5 via-indigo-500/5 to-teal-500/5 rounded-full blur-3xl pointer-events-none" />
+      <CentricForBusinessSection onCirInspect={() => onOpenContact('general')} />
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-          <div className="p-6 sm:p-12 rounded-3xl bg-[#F7F8FA] border border-slate-200/90 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center shadow-sm">
-            <div className="lg:col-span-5 space-y-2">
-              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-rose-600 font-bold block">
-                The Industry Problem
-              </span>
-              <h2 className="font-extrabold text-2xl sm:text-3xl text-[#0A0A0B] tracking-tight leading-snug">
-                Manual collection is draining your margins.
-              </h2>
-            </div>
-            <div className="lg:col-span-7">
-              <p className="text-xs sm:text-base text-slate-700 leading-relaxed">
-                Manual payment collection is slow, costly, and error-prone — late payments, missed installments, reminder calls, and reconciliation delays all eat into your margins and your team's time.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section
+        ref={capabilitiesRef as React.RefObject<HTMLElement>}
+        className="page-section page-section--muted relative overflow-hidden"
+      >
+        <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-[#4F6BFF]/6 rounded-full blur-3xl pointer-events-none" />
 
-      {/* 3. What MyCredAxis Does for Your Business */}
-      <section className="py-16 sm:py-24 bg-[#F7F8FA] relative">
-        <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-[#4F6BFF]/5 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-          <div className="max-w-3xl mb-10 sm:mb-14">
-            <h2 className="font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight">
-              What MyCredAxis does for your business.
+        <div className="site-container relative z-10">
+          <header className="w-full mb-10 sm:mb-14">
+            <h2
+              className={`section-h2 font-extrabold text-[#0A0A0B] tracking-tight business-capabilities-heading transition-all duration-1000 transform ${
+                capabilitiesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '120ms' }}
+            >
+              What MyCredAxis Does for Your Business.
             </h2>
-          </div>
+          </header>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {capabilities.map((cap, i) => {
               const Icon = cap.icon;
+              const delay = 240 + i * 100;
               return (
-                <div
-                  key={i}
-                  className="fintech-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 bg-white border border-slate-200/90 flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300"
+                <article
+                  key={cap.title}
+                  className={`business-cap-card fintech-card rounded-2xl sm:rounded-3xl p-5 sm:p-6 bg-white border border-slate-200/90 flex flex-col h-full group transition-all duration-700 transform hover:-translate-y-1.5 hover:shadow-lg hover:border-slate-300/90 ${
+                    capabilitiesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                  }`}
+                  style={{ transitionDelay: `${delay}ms` }}
                 >
-                  <div>
+                  <div className="flex items-start gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                     <div
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 flex items-center justify-center mb-4 sm:mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3"
+                      className={`business-cap-card-icon w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-xl sm:rounded-2xl ${cap.bg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3`}
                       style={{ color: cap.color }}
                     >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:scale-110" />
+                      <Icon className="w-5 h-5 sm:w-[1.35rem] sm:h-[1.35rem]" strokeWidth={2.1} />
                     </div>
-
-                    <h3 className="font-bold text-base sm:text-lg text-[#0A0A0B] transition-colors duration-300 group-hover:text-[#4F6BFF]">
+                    <h3 className="business-cap-card-title section-h3 font-bold text-[#0A0A0B] leading-snug flex-1 min-w-0 pt-0.5 transition-colors duration-300 group-hover:text-[#4F6BFF]">
                       {cap.title}
                     </h3>
-
-                    <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {cap.desc}
-                    </p>
                   </div>
 
-                  <div className="mt-5 sm:mt-6 pt-3 border-t border-slate-100 text-[10px] sm:text-[11px] font-mono text-slate-400 flex items-center justify-between">
-                    <span>Live B2B Capability</span>
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-[#4F6BFF] transition-colors" />
-                  </div>
-                </div>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">
+                    {cap.desc}
+                  </p>
+                </article>
               );
             })}
           </div>
 
-          {/* Benefits List */}
-          <div className="mt-10 sm:mt-14 p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-sm">
-            <h3 className="font-bold text-lg sm:text-xl text-[#0A0A0B] mb-4 sm:mb-5">
-              Key Business Outcomes
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-              {benefits.map((b, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-[#ECFDF5] text-[#20C7B5] flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                  </div>
-                  <span className="text-xs sm:text-sm text-slate-700 font-medium">{b}</span>
+          <div
+            ref={outcomesRef as React.RefObject<HTMLDivElement>}
+            className={`mt-10 sm:mt-14 business-outcomes-shell transition-all duration-1000 transform ${
+              outcomesVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.98] translate-y-10'
+            }`}
+            style={{ transitionDelay: '120ms' }}
+          >
+            <div className="business-outcomes-panel overflow-hidden rounded-2xl sm:rounded-3xl">
+              <div className="business-outcomes-header px-6 py-5 sm:px-8 sm:py-6 lg:px-10">
+                <h3 className="section-h3 font-bold text-white tracking-tight">Key Business Outcomes</h3>
+              </div>
+              <div className="business-outcomes-body p-5 sm:p-6 lg:p-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {benefits.map((b, idx) => (
+                    <div
+                      key={b}
+                      className={`business-outcome-tile group transition-all duration-700 ${
+                        outcomesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                      }`}
+                      style={{ transitionDelay: `${280 + idx * 90}ms` }}
+                    >
+                      <div className="business-outcome-tile-icon" aria-hidden>
+                        <CheckCircle2 className="w-4 h-4 sm:w-[1.125rem] sm:h-[1.125rem] text-[#20C7B5]" strokeWidth={2.25} />
+                      </div>
+                      <p className="business-outcome-tile-text">{b}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. How It Works (Merchant Flow) */}
-      <section className="py-16 sm:py-24 bg-white border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="max-w-2xl mb-10 sm:mb-12">
-            <h2 className="font-extrabold text-3xl sm:text-4xl text-[#0A0A0B] tracking-tight">
-              From onboarding to predictable receivables.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {[
-              { num: '01', title: 'Onboard', desc: 'Complete merchant onboarding.' },
-              { num: '02', title: 'Set Up Mandates', desc: 'Set up bank-authorized payment mandates.' },
-              { num: '03', title: 'Process Payments', desc: 'Payments and collections are processed automatically.' },
-              { num: '04', title: 'Track in Real Time', desc: 'Track collections in real time.' },
-              { num: '05', title: 'Get Paid Reliably', desc: 'Get paid reliably every cycle.' },
-            ].map((step) => (
-              <div
-                key={step.num}
-                className="p-5 rounded-2xl bg-[#F7F8FA] border border-slate-200 flex flex-col justify-between transition-all hover:shadow-md hover:border-slate-300"
-              >
-                <div>
-                  <span className="font-mono text-xs font-bold text-[#4F6BFF]">STAGE {step.num}</span>
-                  <h4 className="font-bold text-sm sm:text-base text-[#0A0A0B] mt-2">{step.title}</h4>
-                  <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{step.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Business FAQ */}
-      <FAQSection
-        items={BUSINESS_FAQS}
-        title="Frequently Asked Questions for Businesses"
-        subtitle="Answers to common questions about collections, onboarding, and pricing."
+      <StepsFlowSection
+        title="From Customer Onboarding to Faster Payments"
+        titleAccent="Onboarding to Faster Payments"
+        titleAlign="left"
+        stepCardLayout="stage"
+        steps={receivablesSteps}
       />
 
-      {/* 6. Contact CTA with subtle gradient background */}
-      <section className="py-16 sm:py-20 bg-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#4F6BFF]/5 to-transparent pointer-events-none" />
+      <FAQSection
+        enhanced
+        titleSingleLine
+        items={BUSINESS_FAQS}
+        title="Frequently Asked Questions for Businesses"
+        subtitle="Centric verification, collections, onboarding, compliance, and pricing—clear answers for your team."
+      />
 
-        <div className="max-w-2xl mx-auto px-6 space-y-4 relative z-10">
-          <h2 className="font-extrabold text-2xl sm:text-3xl text-[#0A0A0B] tracking-tight">
-            Automate your collections today.
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            Talk to our team about automating your collections.
-          </p>
-          <button
-            onClick={() => onOpenContact('business')}
-            className="inline-flex items-center gap-2 px-6 sm:px-7 py-3.5 rounded-full bg-[#0A0A0B] hover:bg-slate-900 text-white font-semibold text-xs sm:text-sm transition-all shadow-md cursor-pointer mt-2 group active:scale-98"
+      <section
+        ref={contactCtaRef as React.RefObject<HTMLElement>}
+        className="page-section page-section--white relative overflow-hidden"
+        aria-labelledby="business-contact-cta-heading"
+      >
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[min(100%,640px)] h-40 bg-[#4F6BFF]/8 blur-[72px] pointer-events-none"
+          aria-hidden
+        />
+        <div
+          className="absolute bottom-0 right-[8%] w-56 h-56 bg-[#20C7B5]/10 blur-[64px] pointer-events-none page-end-cta-glow"
+          aria-hidden
+        />
+
+        <div className="site-container relative z-10">
+          <div className="page-end-cta-band page-end-cta-band--with-cir">
+          <div
+            className={`page-end-cta-shell transition-all duration-1000 transform ${
+              contactCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: '100ms' }}
           >
-            <Building2 className="w-4 h-4 text-[#20C7B5]" />
-            <span>Talk to Our Team</span>
-          </button>
+            <div className="page-end-cta-panel page-end-cta-panel--with-cir px-6 py-10 sm:px-10 sm:py-12 lg:py-14">
+              <div className="page-end-cta-panel-main">
+              <h2
+                id="business-contact-cta-heading"
+                className={`section-h2 font-extrabold text-[#0A0A0B] tracking-tight page-end-cta-title transition-all duration-1000 ${
+                  contactCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '200ms' }}
+              >
+                Automate Your Collections Today.
+              </h2>
+
+              <p
+                className={`section-lead page-end-cta-lead mt-3 sm:mt-4 transition-all duration-1000 ${
+                  contactCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '320ms' }}
+              >
+                Talk to our team about automating your collections.
+              </p>
+
+              <div
+                className={`page-end-cta-actions mt-6 sm:mt-8 transition-all duration-1000 ${
+                  contactCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: '440ms' }}
+              >
+                <button
+                  type="button"
+                  onClick={() => onOpenContact('business')}
+                  className="site-nav-cta group inline-flex w-full sm:w-auto justify-center sm:justify-start text-sm sm:text-[0.8125rem] px-5 sm:px-6"
+                >
+                  <Building2 className="w-4 h-4 text-[#20C7B5] shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                  <span>Talk to Our Team</span>
+                </button>
+              </div>
+
+              <div
+                className={`page-end-cta-trust mt-6 sm:mt-7 pt-5 sm:pt-6 border-t border-slate-200/80 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] sm:text-xs font-semibold text-slate-600 transition-all duration-1000 ${
+                  contactCtaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+                style={{ transitionDelay: '540ms' }}
+              >
+                <span className="inline-flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#20C7B5]" aria-hidden />
+                  RBI-Compliant Framework
+                </span>
+                <span aria-hidden="true" className="text-slate-300 hidden sm:inline">
+                  ·
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#4F6BFF]" aria-hidden />
+                  PCI DSS Certified
+                </span>
+              </div>
+              </div>
+              <aside className="page-end-cta-panel-aside" aria-label="Centric Identity Report preview">
+                <CirProfileMockupCard
+                  variant="embedded"
+                  onInspectClick={() => onOpenContact('general')}
+                />
+              </aside>
+            </div>
+          </div>
+          </div>
         </div>
       </section>
 
-    </div>
+    </PageShell>
   );
 };

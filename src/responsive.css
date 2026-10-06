@@ -1,0 +1,1078 @@
+/**
+ * Sitewide responsive tuning — same layouts, safer overflow/spacing on all viewports.
+ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  img,
+  video,
+  svg {
+    max-width: 100%;
+  }
+}
+
+/* Content rail */
+@media (max-width: 380px) {
+  .site-container {
+    padding-inline: 1rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .page-section {
+    padding-block: 3rem;
+  }
+
+  .page-shell {
+    padding-top: 4.75rem;
+  }
+}
+
+/* Prevent flex/grid children from forcing horizontal scroll */
+.fx-page,
+.page-shell,
+main.flex-1 {
+  min-width: 0;
+}
+
+.site-container,
+.page-hero .site-container,
+.consent-banner-copy,
+.business-problem-split,
+.business-problem-focus,
+.business-problem-detail,
+.business-cap-card,
+.faq-card,
+.faq-page,
+.page-end-cta-panel,
+.page-end-cta-band--partners,
+.steps-timeline-card,
+.steps-journey-panel,
+.faq-toolbar,
+.data-consent-inner-pro,
+.centric-compare-table-wrap,
+.centric-ind-section,
+.centric-ind-feature-card,
+.app-modal-panel {
+  min-width: 0;
+}
+
+.centric-compare-table-wrap {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.centric-compare-th,
+.centric-compare-td,
+.centric-compare-cell p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 639px) {
+  .centric-compare-th {
+    font-size: 0.625rem;
+    padding: 0.65rem 0.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  #centric-for-business .centric-ind-hero-title,
+  #centric-for-partners-pos .centric-ind-hero-title,
+  #master-key-for-partners .centric-ind-hero-title {
+    font-size: clamp(1.5rem, 6.4vw, 1.875rem);
+    line-height: 1.16;
+    letter-spacing: -0.028em;
+  }
+
+  #centric-for-individuals .centric-ind-hero-lead,
+  #centric-for-business .centric-ind-hero-lead,
+  #centric-for-partners-pos .centric-ind-hero-lead,
+  #master-key-for-partners .centric-ind-hero-lead {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .centric-ind-block-title {
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .page-end-cta-band--partners .page-end-cta-panel--partners {
+    padding-inline: max(1rem, env(safe-area-inset-left, 0px))
+      max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  .page-end-cta-title--partners {
+    font-size: clamp(1.5rem, 6.5vw, 1.875rem);
+    text-wrap: balance;
+  }
+
+  .page-end-cta-panel--with-cir {
+    gap: 1.75rem;
+  }
+
+  .page-end-cta-panel-aside {
+    padding-top: 0.25rem;
+  }
+
+  .page-end-cta-panel-aside .cir-mockup-card--embedded {
+    max-width: min(100%, 22.5rem);
+  }
+}
+
+/* Long words / URLs */
+.section-lead,
+.consent-banner-body,
+.faq-support-email,
+.business-outcome-tile-text {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Page-end CTA */
+.page-end-cta-band,
+.page-end-cta-panel,
+.page-end-cta-title,
+.page-end-cta-lead {
+  min-width: 0;
+}
+
+@media (max-width: 1023px) {
+  .page-end-cta-title,
+  .page-end-cta-title .why-heading-accent,
+  .page-end-cta-lead {
+    white-space: normal;
+  }
+
+  .final-cta-title.section-h2 {
+    white-space: normal;
+  }
+
+  .business-capabilities-heading {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 639px) {
+  .page-end-cta-title .why-heading-accent {
+    display: inline;
+  }
+
+  .consent-verified-pill {
+    white-space: normal;
+    max-width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .consent-banner-inner {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Modals — all devices + notches */
+.app-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+  padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@media (min-width: 640px) {
+  .app-modal-overlay {
+    align-items: center;
+    padding: max(1rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px))
+      max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
+  }
+}
+
+.app-modal-overlay--elevated {
+  z-index: 100;
+}
+
+.app-modal-overlay > .app-modal-panel {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.app-modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-block: auto;
+  max-height: min(92dvh, calc(100dvh - max(1.5rem, env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px))));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-modal-panel--wide {
+  max-width: min(100%, 56.25rem);
+}
+
+.app-modal-panel--md {
+  max-width: min(100%, 28rem);
+}
+
+.app-modal-panel--lg {
+  max-width: min(100%, 32rem);
+}
+
+.app-modal-scroll-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.app-modal-scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* CIR modal tabs */
+@media (max-width: 639px) {
+  .cir-modal-tabs {
+    padding-inline: 0.75rem;
+  }
+
+  .cir-modal-tabs button {
+    flex-shrink: 0;
+    font-size: 0.6875rem;
+    padding-inline: 0.65rem;
+  }
+}
+
+/* FAQ topic rail — touch scroll hint */
+.faq-topic-rail {
+  scroll-padding-inline: 0.5rem;
+  scrollbar-gutter: stable;
+}
+
+/* Trust strip chips on very small screens */
+@media (max-width: 380px) {
+  .fx-trust .fx-chip span {
+    font-size: 0.6875rem;
+  }
+}
+
+/* Hero phone — keep centered (must preserve translateX from index.css) */
+@media (max-width: 1023px) {
+  .page-hero-aside {
+    overflow: visible;
+  }
+
+  .page-hero-phone-frame:not(.page-hero-phone-frame--prominent) {
+    --phone-scale: 0.44;
+    width: calc(340px * var(--phone-scale) * 1.22);
+    max-width: min(100%, 300px);
+    max-height: min(360px, 58vh);
+    margin-inline: auto;
+    overflow: visible;
+  }
+
+  .page-hero-phone-frame--prominent {
+    --phone-scale: 0.5;
+    --mockup-ui-zoom: 1.12;
+    width: min(calc(340px * var(--phone-scale) + 1.25rem), 100%);
+    max-width: none;
+    max-height: min(calc(730px * var(--phone-scale) + 2rem), 80vh);
+    margin-inline: auto;
+    overflow: visible;
+    contain: none;
+  }
+
+  .page-hero-phone-scaler {
+    transform: translateX(-50%) scale(var(--phone-scale));
+    transform-origin: top center;
+  }
+
+  /* 3D tilt overflows narrow viewports — flat preview inside page heroes only */
+  .page-hero-phone-scaler .smartphone-mockup-3d {
+    transform: perspective(1200px) rotateY(0deg) rotateX(0deg) scale(1) !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .page-hero-phone-frame:not(.page-hero-phone-frame--prominent) {
+    --phone-scale: 0.4;
+    max-width: min(100%, 280px);
+    max-height: min(340px, 52vh);
+  }
+
+  .page-hero-phone-frame--prominent {
+    --phone-scale: 0.48;
+    --mockup-ui-zoom: 1.14;
+    max-height: min(calc(730px * var(--phone-scale) + 2rem), 78vh);
+  }
+}
+
+/* Steps journey panel — short viewports */
+@media (max-height: 700px) and (max-width: 1023px) {
+  .steps-journey-panel {
+    max-height: none;
+  }
+}
+
+/* Legal pages */
+@media (max-width: 380px) {
+  .legal-doc-page {
+    padding-inline: 1rem !important;
+  }
+}
+
+/* Tap targets (modals / icon buttons) */
+@media (pointer: coarse) {
+  .app-modal-overlay button[type='button'],
+  .faq-topic-chip,
+  .faq-category-pill {
+    min-height: 2.75rem;
+  }
+}
+
+/* ─── Sitewide overflow & safe areas ─── */
+@layer base {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+    min-width: 0;
+  }
+
+  #root {
+    min-width: 0;
+    overflow-x: clip;
+  }
+}
+
+.site-header {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.site-mobile-backdrop {
+  top: calc(4.25rem + env(safe-area-inset-top, 0px));
+}
+
+.site-mobile-panel-inner {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+}
+
+.site-header-inner {
+  min-width: 0;
+}
+
+.site-header-logo {
+  min-width: 0;
+  max-width: min(100%, 11.5rem);
+}
+
+@media (max-width: 380px) {
+  .site-header-inner {
+    column-gap: 0.65rem;
+  }
+
+  .site-header-logo {
+    max-width: min(100%, 9.75rem);
+  }
+}
+
+/* Homepage hero — desktop: nowrap lines; mobile/tablet stack: see phone block below */
+@media (max-width: 1023px) {
+  #hero .hero-headline .hero-line {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (min-width: 1024px) {
+  #hero .hero-headline .hero-line {
+    width: max-content;
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+/* Homepage hero — phone: full-width left rail, stacked trust chips */
+@media (max-width: 639px) {
+  .site-header .site-container {
+    padding-inline: max(1.125rem, env(safe-area-inset-left, 0px))
+      max(1.125rem, env(safe-area-inset-right, 0px));
+  }
+
+  #hero {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+  #hero .site-container {
+    padding-inline: max(1.125rem, env(safe-area-inset-left, 0px))
+      max(1.125rem, env(safe-area-inset-right, 0px));
+  }
+
+  #hero .home-hero-copy {
+    align-items: stretch;
+    text-align: left;
+    width: 100%;
+    gap: 1.125rem;
+  }
+
+  #hero .home-hero-title-mobile .hero-line {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
+    text-wrap: balance;
+    font-size: clamp(1.625rem, 7.4vw, 2rem);
+    line-height: 1.16;
+    letter-spacing: -0.032em;
+  }
+
+  #hero .home-hero-sub {
+    text-align: left;
+    max-width: none;
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.62;
+    text-wrap: pretty;
+    color: rgb(71 85 105);
+  }
+
+  #hero .home-hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.625rem;
+    padding-top: 0.125rem;
+  }
+
+  #hero .home-hero-ctas button {
+    width: 100%;
+    justify-content: center;
+    min-height: 3rem;
+    padding-block: 0.75rem;
+  }
+
+  #hero .home-hero-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #hero .home-hero-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: rgb(51 65 85);
+    box-shadow: 0 1px 2px rgba(10, 10, 11, 0.04);
+  }
+
+  #hero .home-hero-trust-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  #hero .home-hero-visual {
+    margin-top: 0.5rem;
+  }
+
+  #hero .home-hero-visual > div {
+    margin-inline: auto;
+  }
+}
+
+/* sm–md: inline trust row (desktop uses flex from component) */
+@media (min-width: 640px) {
+  #hero .home-hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.625rem 0.875rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgb(100 116 139);
+  }
+
+  #hero .home-hero-trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: rgb(51 65 85);
+  }
+
+  #hero .home-hero-trust-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  .page-hero--center .page-hero-title.hero-headline .hero-line--single {
+    white-space: normal;
+  }
+}
+
+/* Section headlines that use nowrap only on large screens */
+@media (max-width: 1023px) {
+  .data-consent-heading,
+  .data-consent-heading .why-heading-accent {
+    white-space: normal;
+  }
+
+  .steps-headline,
+  .steps-subline,
+  .why-headline,
+  #why-mycredaxis .why-subline {
+    white-space: normal;
+    text-wrap: pretty;
+  }
+}
+
+@media (max-width: 1279px) {
+  .industry-subline {
+    white-space: normal;
+  }
+}
+
+/* Flex/grid min-width guards (homepage + inner pages) */
+.fx-report,
+.fx-suite,
+.fx-rewards,
+.fx-utility,
+.fx-track,
+.fx-steps,
+.fx-why,
+.fx-security,
+.fx-industry,
+.fx-roadmap,
+.fx-faq,
+.fx-cta,
+.fx-trust,
+.page-section,
+.page-hero,
+.final-cta-shell,
+.security-badge-card,
+.why-card,
+.industry-card,
+.utility-card,
+.track-feature-card,
+.faq-category-shell,
+.faq-search-field,
+.card-badge-header,
+.data-consent-panel,
+.data-consent-trust-grid,
+.footer-main,
+.footer-contact-strip {
+  min-width: 0;
+}
+
+.page-section {
+  overflow-x: clip;
+}
+
+/* FAQ toolbar on narrow screens */
+@media (max-width: 639px) {
+  .steps-headline {
+    font-size: clamp(1.5rem, 6.2vw, 1.75rem);
+    line-height: 1.14;
+    letter-spacing: -0.028em;
+  }
+
+  #partners-how-it-works .steps-headline {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    font-size: clamp(1.125rem, 4.35vw, 1.625rem);
+    letter-spacing: -0.032em;
+    line-height: 1.15;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  #partners-how-it-works .steps-headline::-webkit-scrollbar {
+    display: none;
+  }
+
+  #partners-how-it-works .steps-subline {
+    margin-top: 0.75rem;
+  }
+
+  .steps-subline {
+    font-size: 0.9375rem;
+    line-height: 1.62;
+    text-wrap: pretty;
+    max-width: none;
+  }
+
+  #how-it-works .steps-subline--how-it-works {
+    white-space: normal;
+    text-wrap: pretty;
+  }
+
+  .steps-mobile-progress {
+    border-radius: 1rem;
+  }
+
+  .steps-timeline-item {
+    padding-bottom: 0.875rem;
+  }
+
+  .steps-timeline-index {
+    display: none;
+  }
+
+  .steps-timeline-card {
+    display: grid;
+    grid-template-columns: 2.875rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+    row-gap: 0;
+    align-items: start;
+    padding: 1rem 1rem 1.05rem;
+    border-radius: 1rem;
+  }
+
+  .steps-timeline-card--active {
+    box-shadow:
+      0 12px 28px -18px rgba(79, 107, 255, 0.28),
+      inset 3px 0 0 var(--step-accent, #4f6bff);
+    transform: none;
+  }
+
+  .steps-timeline-card:hover {
+    transform: none;
+  }
+
+  .steps-timeline-card > .min-w-0.flex-1 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .steps-timeline-icon {
+    grid-column: 1;
+    grid-row: 1;
+    width: 2.875rem;
+    height: 2.875rem;
+    border-radius: 0.85rem;
+  }
+
+  .steps-timeline-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .steps-timeline-card h3 {
+    font-size: 0.9375rem;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .steps-timeline-card p {
+    margin-top: 0.375rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .steps-timeline {
+    padding-left: 2.35rem;
+    --timeline-rail-x: 1rem;
+  }
+
+  .steps-timeline-node {
+    left: calc(var(--timeline-rail-x) - 0.3125rem);
+    top: 1.25rem;
+    width: 0.625rem;
+    height: 0.625rem;
+  }
+
+  .faq-toolbar-topics-head {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .faq-toolbar-result {
+    white-space: normal;
+    text-align: left;
+  }
+}
+
+@media (max-width: 380px) {
+  .faq-topic-chip {
+    font-size: 0.75rem;
+    padding-inline: 0.75rem;
+  }
+}
+
+/* Utility spotlight footer strip */
+@media (max-width: 1023px) {
+  #utility-spotlight .lg\:col-span-3 > span:last-child {
+    white-space: normal;
+    text-align: left;
+  }
+}
+
+@media (max-width: 639px) {
+  .utility-card > .flex.items-center.justify-between {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+/* Dark prestige tier card + eyebrow */
+@media (max-width: 639px) {
+  #dark-section > .site-container > .text-center > .inline-flex {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.35rem;
+    max-width: 100%;
+  }
+
+  #dark-section .relative.group > div.relative.rounded-3xl {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  #dark-section .flex.flex-wrap.justify-center.gap-2 {
+    max-width: 100%;
+  }
+}
+
+/* Final CTA action row */
+@media (max-width: 639px) {
+  .final-cta-shell .flex.flex-wrap,
+  .final-cta-shell .flex.flex-col.sm\:flex-row {
+    width: 100%;
+  }
+
+  .final-cta-shell button,
+  .final-cta-shell a {
+    max-width: 100%;
+  }
+}
+
+/* Legal docs */
+.legal-doc-page {
+  overflow-x: clip;
+  word-wrap: break-word;
+}
+
+.legal-doc-page table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.legal-doc-page pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 639px) {
+  .legal-doc-page h1 {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    line-height: 1.2;
+  }
+}
+
+/* Design spec drawer (when open) */
+@media (max-width: 639px) {
+  .fixed.inset-0.z-40.flex.items-start.justify-center.pt-16 {
+    padding-top: max(4rem, env(safe-area-inset-top, 0px) + 2.5rem);
+    padding-inline: max(0.75rem, env(safe-area-inset-left, 0px))
+      max(0.75rem, env(safe-area-inset-right, 0px));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .fixed.inset-0.z-40 .border-b.border-slate-200.bg-slate-50.flex.items-center.gap-2 {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+/* Steps timeline horizontal safety */
+.steps-timeline-layout,
+.steps-timeline,
+.steps-journey-panel {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@media (max-width: 639px) {
+  .steps-timeline-card {
+    padding-inline: 1rem;
+  }
+
+  /* Hero trust badges under CTA (subpages) */
+  .page-hero .space-y-4 > .flex.flex-wrap.items-center {
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    max-width: 100%;
+  }
+
+  .page-hero .space-y-4 > .flex.flex-wrap.items-center > span.flex {
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
+}
+
+/* Page-end & final CTA buttons full width on very small phones */
+@media (max-width: 380px) {
+  .page-end-cta-actions .inline-flex,
+  .page-end-cta-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─── Sitewide responsive pass (sections / grids / headings) ─── */
+
+.site-container .grid > *,
+.site-container [class*='grid-cols'] > *,
+.footer-links-grid > *,
+.footer-link-col {
+  min-width: 0;
+}
+
+.fx-report,
+.fx-suite,
+.fx-rewards,
+.fx-utility,
+.fx-track,
+.fx-steps,
+.fx-why,
+.fx-security,
+.fx-industry,
+.fx-roadmap,
+.fx-faq,
+.fx-cta,
+.site-footer {
+  overflow-x: clip;
+}
+
+.cir-section-headline,
+.rewards-section-heading:not(.rewards-section-heading--single-line) {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+.rewards-section-heading--single-line {
+  overflow-wrap: normal;
+}
+
+@media (max-width: 1279px) {
+  .page-hero:has(.page-hero-aside) .page-hero-title--single-line,
+  .page-hero:has(.page-hero-aside) .page-hero-title.hero-headline .hero-line,
+  .page-hero:has(.page-hero-aside) .page-hero-title.hero-headline .hero-line--single {
+    white-space: normal;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  .page-end-cta-title--single-line,
+  .page-end-cta-title--single-line .why-heading-accent {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .business-capabilities-heading {
+    white-space: normal;
+    text-wrap: balance;
+  }
+}
+
+@media (max-width: 767px) {
+  .rewards-section-heading--single-line {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .rewards-metal-card-title {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .rewards-section-lead {
+    font-size: clamp(0.78125rem, 0.35vw + 0.68rem, 0.875rem);
+    line-height: 1.42;
+    letter-spacing: -0.015em;
+  }
+}
+
+@media (max-width: 1023px) {
+  .rewards-section-heading:not(.rewards-section-heading--single-line) {
+    white-space: normal;
+  }
+
+  .utility-footer-note {
+    white-space: normal;
+    text-align: left;
+  }
+
+  #centric-identity-report .fintech-card h3 {
+    text-wrap: balance;
+  }
+
+  #centric-for-business .centric-ind-hero-title,
+  #centric-for-partners-pos .centric-ind-hero-title,
+  #master-key-for-partners .centric-ind-hero-title,
+  #centric-for-business .centric-ind-hero-line,
+  #centric-for-partners-pos .centric-ind-hero-line,
+  #master-key-for-partners .centric-ind-hero-line {
+    max-width: 100%;
+    text-wrap: wrap;
+    overflow-wrap: anywhere;
+  }
+
+  #centric-for-individuals .centric-ind-hero-title:not(.centric-ind-hero-title--individuals),
+  #centric-for-individuals .centric-ind-hero-title:not(.centric-ind-hero-title--individuals) .centric-ind-hero-line,
+  #centric-for-business .centric-ind-hero-title:not(.centric-ind-hero-title--business),
+  #centric-for-business .centric-ind-hero-title:not(.centric-ind-hero-title--business) .centric-ind-hero-line,
+  #master-key-for-partners .centric-ind-hero-title:not(.centric-ind-hero-title--master-key),
+  #master-key-for-partners .centric-ind-hero-title:not(.centric-ind-hero-title--master-key) .centric-ind-hero-line {
+    max-width: 100%;
+    text-wrap: wrap;
+    overflow-wrap: anywhere;
+  }
+
+  #centric-for-individuals .centric-ind-hero-lead,
+  #centric-for-business .centric-ind-hero-lead,
+  #centric-for-partners-pos .centric-ind-hero-lead,
+  #master-key-for-partners .centric-ind-hero-lead {
+    max-width: 100%;
+  }
+
+  #centric-for-individuals .centric-ind-hero-top,
+  #centric-for-business .centric-ind-hero-top,
+  #centric-for-partners-pos .centric-ind-hero-top,
+  #master-key-for-partners .centric-ind-hero-top {
+    flex-wrap: wrap;
+  }
+
+  #centric-for-individuals .centric-ind-eyebrow,
+  #centric-for-business .centric-ind-eyebrow,
+  #centric-for-partners-pos .centric-ind-eyebrow,
+  #master-key-for-partners .centric-ind-eyebrow {
+    max-width: min(100%, 11rem);
+    text-align: center;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 639px) {
+  .footer-contact-text {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .footer-tagline {
+    text-align: left;
+    hyphens: manual;
+  }
+
+  .site-nav-cta {
+    max-width: 100%;
+  }
+
+  #centric-identity-report .flex.flex-col.sm\:flex-row.items-center.justify-between {
+    align-items: stretch;
+  }
+
+  .business-problem-split,
+  .business-problem-detail-inner {
+    min-width: 0;
+  }
+
+  .business-problem-quote {
+    padding-left: 1rem;
+    max-width: 100%;
+  }
+}
+
+/* Tablet: avoid clipped hero copy beside phone */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .page-hero .lg\:col-span-7 {
+    min-width: 0;
+  }
+
+  .page-hero-aside {
+    overflow: visible;
+  }
+}
+
+/* Large phones / small tablets — capability grids */
+@media (max-width: 480px) {
+  .page-section .grid.grid-cols-2:not(.lg\:grid-cols-4) {
+    gap: 0.625rem;
+  }
+
+  .fintech-card h3,
+  .section-h3 {
+    font-size: clamp(0.8125rem, 3.6vw, 0.9375rem);
+  }
+}
+
+/* Landscape short height — reduce hero vertical pressure */
+@media (max-height: 640px) and (max-width: 1023px) {
+  .page-hero {
+    padding-bottom: 1.25rem;
+  }
+
+  .page-hero-phone-frame--prominent {
+    max-height: min(52vh, 320px);
+  }
+}
+
+/* Touch: full-width primary CTAs in page sections */
+@media (max-width: 639px) and (pointer: coarse) {
+  .page-hero .site-nav-cta,
+  .page-section .site-nav-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

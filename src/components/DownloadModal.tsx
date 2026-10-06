@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, Check, ArrowRight } from 'lucide-react';
 import { MyCredAxisLogo } from './MyCredAxisLogo';
 
@@ -20,6 +20,15 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
   const [phone, setPhone] = useState('');
   const [sent, setSent] = useState(false);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSendLink = (e: React.FormEvent) => {
@@ -29,8 +38,8 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-      <div className="relative w-full max-w-lg bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl p-5 sm:p-7 animate-in fade-in zoom-in-95 duration-200 my-auto">
+    <div className="app-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="download-modal-title">
+      <div className="app-modal-panel app-modal-panel--lg bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl p-5 sm:p-7 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Close Button */}
         <button
@@ -44,7 +53,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
           <div className="flex justify-center mb-2 sm:mb-3">
             <MyCredAxisLogo size="sm" />
           </div>
-          <h3 className="font-display font-extrabold text-xl sm:text-2xl text-[#0A0A0B]">
+          <h3 id="download-modal-title" className="font-display font-extrabold text-xl sm:text-2xl text-[#0A0A0B]">
             Get the MyCredAxis App
           </h3>
           <p className="text-[11px] sm:text-xs text-slate-500 mt-1 font-body leading-relaxed">

@@ -9,7 +9,7 @@ export const GridOverlay: React.FC<{ active: boolean }> = ({ active }) => {
   if (!active) return null;
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none max-w-7xl mx-auto px-6 lg:px-12">
+    <div className="fixed inset-0 z-50 pointer-events-none site-container">
       <div className="grid grid-cols-12 gap-6 h-full opacity-20">
         {Array.from({ length: 12 }).map((_, i) => (
           <div

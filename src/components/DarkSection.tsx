@@ -66,7 +66,7 @@ export const DarkSection: React.FC = () => {
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-[#4F6BFF]/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[500px] h-[500px] bg-[#20C7B5]/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+      <div className="site-container relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -79,7 +79,7 @@ export const DarkSection: React.FC = () => {
           </div>
 
           <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
-            For those who hold credit to a higher standard.
+            For Those Who Hold Credit to a Higher Standard.
           </h2>
 
           <p className="font-body text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">

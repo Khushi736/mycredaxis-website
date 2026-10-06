@@ -63,9 +63,12 @@ export const CIRModal: React.FC<CIRModalProps> = ({ isOpen, onClose, onOpenConta
   };
 
   return (
-    <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 lg:p-8"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
+    <div
+      className="app-modal-overlay app-modal-overlay--elevated"
+     
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cir-modal-title"
     >
       {/* Dark backdrop with blur */}
       <div 
@@ -74,7 +77,7 @@ export const CIRModal: React.FC<CIRModalProps> = ({ isOpen, onClose, onOpenConta
       />
 
       {/* Main Modal Container - Wide Layout */}
-      <div className="relative w-full max-w-[900px] bg-white rounded-[24px] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-in fade-in zoom-in-95 duration-300">
+      <div className="app-modal-panel app-modal-panel--wide bg-white rounded-2xl sm:rounded-[24px] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-300">
         
         {/* Dark Header */}
         <div className="bg-[#0A0A0B] px-6 sm:px-8 py-5 shrink-0 flex items-center justify-between">
@@ -87,7 +90,9 @@ export const CIRModal: React.FC<CIRModalProps> = ({ isOpen, onClose, onOpenConta
                 <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#20C7B5]">FLAGSHIP TRUST VERIFICATION</span>
                 <span className="text-[9px] bg-white/10 text-slate-300 px-1.5 py-0.5 rounded border border-white/10">v2.4 Live</span>
               </div>
-              <h2 className="font-bold text-lg sm:text-xl text-white tracking-tight">Centric Identity Report (CIR)</h2>
+              <h2 id="cir-modal-title" className="font-bold text-lg sm:text-xl text-white tracking-tight">
+                Centric Identity Report (CIR)
+              </h2>
             </div>
           </div>
           
@@ -100,7 +105,7 @@ export const CIRModal: React.FC<CIRModalProps> = ({ isOpen, onClose, onOpenConta
         </div>
 
         {/* Horizontal Navigation Tabs */}
-        <div className="border-b border-slate-200 px-4 sm:px-8 shrink-0 overflow-x-auto hide-scrollbar">
+        <div className="cir-modal-tabs border-b border-slate-200 px-4 sm:px-8 shrink-0 overflow-x-auto app-modal-scroll-hidden">
           <div className="flex items-center gap-2 sm:gap-6 min-w-max py-3">
             <button 
               onClick={() => setActiveTab('overview')}

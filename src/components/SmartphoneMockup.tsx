@@ -23,18 +23,31 @@ import {
   Eye
 } from 'lucide-react';
 import { MyCredAxisEmblem } from './MyCredAxisLogo';
+import { WalletMockupScreen } from './WalletMockupScreen';
+import { RewardsMockupScreen } from './RewardsMockupScreen';
+import { MandateDetailsMockupScreen } from './MandateDetailsMockupScreen';
+import { PartnerDashboardMockupScreen } from './PartnerDashboardMockupScreen';
 
 interface SmartphoneMockupProps {
   perspective?: 'isometric' | 'flat';
   interactive?: boolean;
   className?: string;
+  /** Alternate in-app screens for marketing mockups */
+  screen?: 'home' | 'wallet' | 'rewards' | 'mandate' | 'partner';
+  /** Hide side hardware buttons for a cleaner marketing frame */
+  cleanFrame?: boolean;
 }
 
 export const SmartphoneMockup: React.FC<SmartphoneMockupProps> = ({
   perspective = 'isometric',
   interactive = true,
   className = '',
+  screen = 'home',
+  cleanFrame = false,
 }) => {
+  const isAltScreen =
+    screen === 'wallet' || screen === 'rewards' || screen === 'mandate' || screen === 'partner';
+  const isFullBleedScreen = screen === 'partner';
   const [activeTab, setActiveTab] = useState<'home' | 'payments' | 'credit' | 'rewards'>('home');
   const [creditScore, setCreditScore] = useState<number>(780);
   const [viewAngle, setViewAngle] = useState<'isometric' | 'flat'>(perspective);
@@ -83,7 +96,7 @@ export const SmartphoneMockup: React.FC<SmartphoneMockupProps> = ({
 
       {/* 3D Transform Container */}
       <div
-        className="transition-transform duration-700 ease-out"
+        className="smartphone-mockup-3d transition-transform duration-700 ease-out"
         style={
           viewAngle === 'isometric'
             ? {
@@ -96,44 +109,67 @@ export const SmartphoneMockup: React.FC<SmartphoneMockupProps> = ({
         }
       >
         {/* Phone Body Frame */}
-        <div className="relative w-[340px] sm:w-[370px] h-[730px] rounded-[52px] bg-[#1a1c22] p-[10px] shadow-[0_30px_90px_-15px_rgba(10,10,11,0.35),0_0_0_1px_rgba(255,255,255,0.15)] ring-1 ring-slate-800">
+        <div
+          className={`smartphone-mockup-device relative w-[340px] h-[730px] rounded-[52px] bg-[#1a1c22] p-[10px] shadow-[0_30px_90px_-15px_rgba(10,10,11,0.35),0_0_0_1px_rgba(255,255,255,0.15)] ring-1 ring-slate-800 ${
+            cleanFrame ? 'smartphone-mockup-device--clean' : ''
+          }`}
+        >
           
           {/* Subtle Outer Metal Bezel Highlights */}
           <div className="absolute inset-0 rounded-[52px] pointer-events-none border border-white/20" />
           
-          {/* Hardware Buttons on left/right side */}
-          <div className="absolute -left-[3px] top-[115px] w-[3px] h-[26px] bg-[#2a2d36] rounded-l-xs" />
-          <div className="absolute -left-[3px] top-[155px] w-[3px] h-[45px] bg-[#2a2d36] rounded-l-xs" />
-          <div className="absolute -left-[3px] top-[210px] w-[3px] h-[45px] bg-[#2a2d36] rounded-l-xs" />
-          <div className="absolute -right-[3px] top-[140px] w-[3px] h-[65px] bg-[#2a2d36] rounded-r-xs" />
+          {!cleanFrame && (
+            <>
+              {/* Hardware Buttons on left/right side */}
+              <div className="absolute -left-[3px] top-[115px] w-[3px] h-[26px] bg-[#2a2d36] rounded-l-xs" />
+              <div className="absolute -left-[3px] top-[155px] w-[3px] h-[45px] bg-[#2a2d36] rounded-l-xs" />
+              <div className="absolute -left-[3px] top-[210px] w-[3px] h-[45px] bg-[#2a2d36] rounded-l-xs" />
+              <div className="absolute -right-[3px] top-[140px] w-[3px] h-[65px] bg-[#2a2d36] rounded-r-xs" />
+            </>
+          )}
 
           {/* Screen Glass Area */}
           <div className="relative w-full h-full rounded-[42px] bg-white overflow-hidden flex flex-col select-none text-[#0A0A0B] shadow-inner">
             
-            {/* Status Bar */}
-            <div className="pt-3 px-6 pb-2 flex items-center justify-between text-xs font-semibold text-slate-800 shrink-0">
-              <span>9:41</span>
-              {/* Dynamic Island */}
-              <div className="w-[100px] h-[26px] bg-black rounded-full flex items-center justify-between px-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-700/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-teal-400/20 border border-teal-500/40" />
-              </div>
-              <div className="flex items-center gap-1.5 text-slate-700">
-                <span className="text-[10px]">5G</span>
-                {/* Signal Bars */}
-                <div className="flex items-end gap-0.5 h-3">
-                  <div className="w-0.5 h-1 bg-slate-800 rounded-xs" />
-                  <div className="w-0.5 h-1.5 bg-slate-800 rounded-xs" />
-                  <div className="w-0.5 h-2.5 bg-slate-800 rounded-xs" />
-                  <div className="w-0.5 h-3 bg-slate-800 rounded-xs" />
+            {/* Status Bar — omitted on full-bleed reference screens */}
+            {!isFullBleedScreen && (
+              <div className="pt-3 px-6 pb-2 flex items-center justify-between text-xs font-semibold text-slate-800 shrink-0">
+                <span>9:41</span>
+                {/* Dynamic Island */}
+                <div className="w-[100px] h-[26px] bg-black rounded-full flex items-center justify-between px-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-700/60" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-teal-400/20 border border-teal-500/40" />
                 </div>
-                {/* Battery */}
-                <div className="w-5 h-2.5 rounded-xs border border-slate-700 p-0.5 flex items-center">
-                  <div className="w-full h-full bg-slate-800 rounded-xs" />
+                <div className="flex items-center gap-1.5 text-slate-700">
+                  <span className="text-[10px]">5G</span>
+                  {/* Signal Bars */}
+                  <div className="flex items-end gap-0.5 h-3">
+                    <div className="w-0.5 h-1 bg-slate-800 rounded-xs" />
+                    <div className="w-0.5 h-1.5 bg-slate-800 rounded-xs" />
+                    <div className="w-0.5 h-2.5 bg-slate-800 rounded-xs" />
+                    <div className="w-0.5 h-3 bg-slate-800 rounded-xs" />
+                  </div>
+                  {/* Battery */}
+                  <div className="w-5 h-2.5 rounded-xs border border-slate-700 p-0.5 flex items-center">
+                    <div className="w-full h-full bg-slate-800 rounded-xs" />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
+            {isAltScreen ? (
+              <div
+                className={`mockup-alt-screen flex-1 min-h-0 flex flex-col overflow-hidden overscroll-none ${
+                  isFullBleedScreen ? 'mockup-alt-screen--full-bleed' : ''
+                }`}
+              >
+                {screen === 'wallet' && <WalletMockupScreen />}
+                {screen === 'rewards' && <RewardsMockupScreen />}
+                {screen === 'mandate' && <MandateDetailsMockupScreen />}
+                {screen === 'partner' && <PartnerDashboardMockupScreen />}
+              </div>
+            ) : (
+              <>
             {/* Mobile App Navigation Header */}
             <div className="px-5 py-2.5 flex items-center justify-between border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-2">
@@ -413,11 +449,15 @@ export const SmartphoneMockup: React.FC<SmartphoneMockupProps> = ({
                 <span>More</span>
               </div>
             </div>
+              </>
+            )}
 
-            {/* iOS Home Indicator Bar */}
-            <div className="pb-1.5 pt-1 flex justify-center bg-white">
-              <div className="w-32 h-1 bg-slate-300 rounded-full" />
-            </div>
+            {/* iOS Home Indicator Bar — hidden on full-bleed reference screens */}
+            {!isFullBleedScreen && (
+              <div className="pb-1.5 pt-1 flex justify-center bg-white shrink-0">
+                <div className="w-32 h-1 bg-slate-300 rounded-full" />
+              </div>
+            )}
 
           </div>
         </div>
