@@ -78,7 +78,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   className="hero-line hero-accent block text-transparent bg-clip-text bg-gradient-to-r from-[#4F6BFF] via-[#3854E0] to-[#20C7B5]"
                   style={{ transitionDelay: isVisible ? '220ms' : undefined }}
                 >
-                  Your Payments. One App That Rewards You for Both.
+                  Your Payments. One App That Rewards You for Both. 
                 </span>
               </span>
               {/* sm+: original staggered desktop lines */}
