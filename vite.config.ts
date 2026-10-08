@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import type {Plugin} from 'vite';
 import {defineConfig} from 'vite';
+import {spaHashBootstrap} from './vite.spaHashBootstrap';
 
 /** Browsers still request /favicon.ico by default; serve our webp asset. */
 function faviconIcoFallback(): Plugin {
@@ -31,7 +32,7 @@ export default defineConfig(() => {
   const disableHmr = process.env.DISABLE_HMR === 'true';
 
   return {
-    plugins: [react(), tailwindcss(), faviconIcoFallback()],
+    plugins: [spaHashBootstrap(), react(), tailwindcss(), faviconIcoFallback()],
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname, '.'),

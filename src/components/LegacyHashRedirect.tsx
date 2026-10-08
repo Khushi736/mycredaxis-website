@@ -13,17 +13,23 @@ export function LegacyHashRedirect() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const raw = location.hash.replace(/^#\/?/, '').trim();
-    if (!raw) {
-      return;
-    }
+    const migrateHash = () => {
+      const raw = location.hash.replace(/^#\/?/, '').trim();
+      if (!raw) {
+        return;
+      }
 
-    if (isValidPageRoute(raw)) {
-      navigate(getPathForRoute(raw), { replace: true });
-      return;
-    }
+      if (isValidPageRoute(raw)) {
+        navigate(getPathForRoute(raw), { replace: true });
+        return;
+      }
 
-    navigate({ pathname: location.pathname, search: location.search }, { replace: true });
+      navigate({ pathname: location.pathname, search: location.search }, { replace: true });
+    };
+
+    migrateHash();
+    window.addEventListener('hashchange', migrateHash);
+    return () => window.removeEventListener('hashchange', migrateHash);
   }, [location.hash, location.pathname, location.search, navigate]);
 
   return null;

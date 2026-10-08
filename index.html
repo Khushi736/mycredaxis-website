@@ -15,28 +15,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- INJECT_SPA_HASH_BOOTSTRAP -->
   </head>
   <body class="bg-[#F7F8FA] text-[#0A0A0B] antialiased selection:bg-[#4F6BFF]/20 selection:text-[#4F6BFF]">
-    <script>
-      (function () {
-        var hash = (location.hash || '').replace(/^#\/?/, '');
-        var routes = {
-          individuals: 1,
-          business: 1,
-          partners: 1,
-          security: 1,
-          faq: 1,
-          contact: 1,
-          'privacy-policy': 1,
-          'terms-conditions': 1,
-        };
-        if (hash && routes[hash]) {
-          history.replaceState(null, '', '/' + hash + location.search);
-        } else if (location.hash) {
-          history.replaceState(null, '', location.pathname + location.search);
-        }
-      })();
-    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

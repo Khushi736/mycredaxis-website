@@ -38,6 +38,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Audit routes (no hash links in source)
+        run: node scripts/audit-routes.mjs
+
       - name: Verify SPA routing bundle
         run: node scripts/verify-spa-build.mjs
 
