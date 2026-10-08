@@ -40,14 +40,14 @@ import { TermsConditionsPage } from './components/TermsConditions';
 
 // Data
 import { HOMEPAGE_FAQS } from './data/faqData';
+import {
+  getRouteFromLocation,
+  migrateLegacyHashUrl,
+  writeRouteToHistory,
+} from './routing';
 
 export default function App() {
-  // Initial route check from URL hash so refresh keeps the current page
-  const [currentRoute, setCurrentRoute] = useState<PageRoute>(() => {
-    const hash = window.location.hash.replace('#', '') as PageRoute;
-    const validRoutes: PageRoute[] = ['home', 'individuals', 'business', 'partners', 'security', 'faq', 'contact', 'privacy-policy', 'terms-conditions'];
-    return validRoutes.includes(hash) ? hash : 'home';
-  });
+  const [currentRoute, setCurrentRoute] = useState<PageRoute>(() => getRouteFromLocation());
 
   const [showGrid, setShowGrid] = useState<boolean>(false);
 
@@ -57,24 +57,31 @@ export default function App() {
   const [contactType, setContactType] = useState<'individual' | 'business' | 'partner' | 'general'>('business');
   const [logInOpen, setLogInOpen] = useState(false);
 
-  // Sync route changes with URL hash
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') as PageRoute;
-      const validRoutes: PageRoute[] = ['home', 'individuals', 'business', 'partners', 'security', 'faq', 'contact', 'privacy-policy', 'terms-conditions'];
-      if (validRoutes.includes(hash)) {
-        setCurrentRoute(hash);
-      }
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    const initial = getRouteFromLocation();
+    migrateLegacyHashUrl(initial);
+    setCurrentRoute(initial);
   }, []);
 
-  // Handle route change with scroll to top and updating URL hash
+  useEffect(() => {
+    const onPopState = () => {
+      setCurrentRoute(getRouteFromLocation());
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  useEffect(() => {
+    if (currentRoute !== 'contact') {
+      return;
+    }
+    setContactType('general');
+    setContactOpen(true);
+  }, [currentRoute]);
+
   const handleNavigate = (route: PageRoute) => {
     setCurrentRoute(route);
-    window.location.hash = route;
+    writeRouteToHistory(route);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -120,7 +127,7 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 min-w-0 overflow-x-clip">
-        {currentRoute === 'home' && (
+        {(currentRoute === 'home' || currentRoute === 'contact') && (
           <>
             {/* 1. Hero Section */}
             <HeroSection
