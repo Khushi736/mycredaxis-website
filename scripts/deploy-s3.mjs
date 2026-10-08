@@ -28,11 +28,14 @@ const regionFlag = region ? `--region ${region}` : '';
 console.log('Building…');
 execSync('npm run build', { stdio: 'inherit', shell: true });
 
+console.log('Verifying SPA build…');
+execSync('node scripts/verify-spa-build.mjs', { stdio: 'inherit', shell: true });
+
 console.log(`Syncing dist/ → s3://${bucket}/ …`);
-execSync(`aws s3 sync dist/ s3://${bucket}/ --delete ${regionFlag}`, {
-  stdio: 'inherit',
-  shell: true,
-});
+execSync(
+  `aws s3 sync dist/ s3://${bucket}/ --delete --exclude "index.html" --cache-control "public,max-age=31536000,immutable" ${regionFlag}`,
+  { stdio: 'inherit', shell: true },
+);
 
 console.log('Setting short cache on HTML entry…');
 execSync(
