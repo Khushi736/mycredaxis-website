@@ -35,20 +35,28 @@ const PATH_TO_ROUTE: Record<string, PageRoute> = Object.fromEntries(
 
 function normalizePathname(pathname: string): string {
   const trimmed = pathname.replace(/\/+$/, '');
-  return trimmed === '' ? '/' : trimmed;
+  if (trimmed === '' || trimmed === '/index.html') {
+    return '/';
+  }
+  return trimmed;
 }
 
-/** Resolve route from pathname and legacy `/#route` hash URLs. */
+/** Map URL pathname to app route (hash ignored — use LegacyHashRedirect for old links). */
+export function getRouteFromPathname(pathname: string): PageRoute {
+  const normalized = normalizePathname(pathname);
+  return PATH_TO_ROUTE[normalized] ?? 'home';
+}
+
+/** @deprecated Prefer getRouteFromPathname + LegacyHashRedirect */
 export function getRouteFromLocation(loc: Pick<Location, 'pathname' | 'hash'> = window.location): PageRoute {
+  const fromPath = getRouteFromPathname(loc.pathname);
+  if (fromPath !== 'home' || normalizePathname(loc.pathname) !== '/') {
+    return fromPath;
+  }
+
   const hash = loc.hash.replace(/^#\/?/, '').trim();
   if (hash && VALID_PAGE_ROUTES.includes(hash as PageRoute)) {
     return hash as PageRoute;
-  }
-
-  const pathname = normalizePathname(loc.pathname);
-  const fromPath = PATH_TO_ROUTE[pathname];
-  if (fromPath) {
-    return fromPath;
   }
 
   return 'home';
@@ -60,29 +68,4 @@ export function getPathForRoute(route: PageRoute): string {
 
 export function isValidPageRoute(value: string): value is PageRoute {
   return VALID_PAGE_ROUTES.includes(value as PageRoute);
-}
-
-/** Update the address bar without hash fragments. */
-export function writeRouteToHistory(route: PageRoute, mode: 'push' | 'replace' = 'push'): void {
-  const path = getPathForRoute(route);
-  const nextUrl = `${path}${window.location.search}`;
-  const currentUrl = `${window.location.pathname}${window.location.search}`;
-
-  if (currentUrl === nextUrl && !window.location.hash) {
-    return;
-  }
-
-  if (mode === 'replace') {
-    window.history.replaceState({ route }, '', nextUrl);
-  } else {
-    window.history.pushState({ route }, '', nextUrl);
-  }
-}
-
-/** Strip legacy hash URLs after resolving the route (e.g. /#privacy-policy → /privacy-policy). */
-export function migrateLegacyHashUrl(route: PageRoute): void {
-  if (!window.location.hash) {
-    return;
-  }
-  writeRouteToHistory(route, 'replace');
 }

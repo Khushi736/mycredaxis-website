@@ -4,8 +4,10 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { MyCredAxisLogo } from './MyCredAxisLogo';
 import { PageRoute } from '../types';
+import { getPathForRoute } from '../routing';
 import { Menu, X, Download } from 'lucide-react';
 
 interface NavbarProps {
@@ -72,27 +74,25 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="site-header-glow pointer-events-none" aria-hidden />
 
       <div className="site-container site-header-inner">
-        <button
-          type="button"
-          onClick={() => onNavigate('home')}
+        <Link
+          to={getPathForRoute('home')}
           className="site-header-logo shrink-0 text-left cursor-pointer"
           aria-label="MyCredAxis home"
         >
           <MyCredAxisLogo size="md" variant="light" />
-        </button>
+        </Link>
 
         <nav className="site-header-nav hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Primary">
           {navItems.map((item) => {
             const isActive = currentRoute === item.route;
             return (
-              <button
+              <Link
                 key={item.route}
-                type="button"
-                onClick={() => onNavigate(item.route)}
+                to={getPathForRoute(item.route)}
                 className={`site-nav-link ${isActive ? 'site-nav-link--active' : ''}`}
               >
                 <span>{item.label}</span>
-              </button>
+              </Link>
             );
           })}
         </nav>
@@ -150,31 +150,25 @@ export const Navbar: React.FC<NavbarProps> = ({
       >
         <div className="site-container site-mobile-panel-inner">
           <nav className="flex flex-col gap-1" aria-label="Mobile primary">
-            <button
-              type="button"
-              onClick={() => {
-                onNavigate('home');
-                closeMobile();
-              }}
+            <Link
+              to={getPathForRoute('home')}
+              onClick={closeMobile}
               className={`site-mobile-link ${currentRoute === 'home' ? 'site-mobile-link--active' : ''}`}
               style={{ transitionDelay: mobileMenuOpen ? '40ms' : '0ms' }}
             >
               Home
-            </button>
+            </Link>
 
             {navItems.map((item, index) => (
-              <button
+              <Link
                 key={item.route}
-                type="button"
-                onClick={() => {
-                  onNavigate(item.route);
-                  closeMobile();
-                }}
+                to={getPathForRoute(item.route)}
+                onClick={closeMobile}
                 className={`site-mobile-link ${currentRoute === item.route ? 'site-mobile-link--active' : ''}`}
                 style={{ transitionDelay: mobileMenuOpen ? `${80 + index * 35}ms` : '0ms' }}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </nav>
 

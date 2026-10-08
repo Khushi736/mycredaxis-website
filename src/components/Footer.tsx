@@ -4,8 +4,10 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MyCredAxisLogo } from './MyCredAxisLogo';
 import { PageRoute } from '../types';
+import { getPathForRoute } from '../routing';
 import { Mail, Phone, Instagram, Facebook, Youtube, LucideIcon } from 'lucide-react';
 
 interface FooterProps {
@@ -53,19 +55,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenContact, onOpe
               <h4 className="footer-col-title">Audience</h4>
               <ul className="footer-link-list text-slate-400">
                 <li>
-                  <button type="button" onClick={() => onNavigate('individuals')} className="footer-link">
+                  <Link to={getPathForRoute('individuals')} className="footer-link">
                     Individuals
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button type="button" onClick={() => onNavigate('business')} className="footer-link">
+                  <Link to={getPathForRoute('business')} className="footer-link">
                     Business
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button type="button" onClick={() => onNavigate('partners')} className="footer-link">
+                  <Link to={getPathForRoute('partners')} className="footer-link">
                     Partners
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <button
@@ -94,14 +96,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenContact, onOpe
               <h4 className="footer-col-title">Trust &amp; Support</h4>
               <ul className="footer-link-list text-slate-400">
                 <li>
-                  <button type="button" onClick={() => onNavigate('security')} className="footer-link">
+                  <Link to={getPathForRoute('security')} className="footer-link">
                     Security &amp; Compliance
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button type="button" onClick={() => onNavigate('faq')} className="footer-link">
+                  <Link to={getPathForRoute('faq')} className="footer-link">
                     Shared FAQ Bank
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <button type="button" onClick={() => onOpenContact('general')} className="footer-link">
@@ -118,14 +120,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenContact, onOpe
                 <li>By Bisani Brother</li>
                 <li>Bangalore · Mumbai</li>
                 <li>
-                  <button type="button" onClick={() => onNavigate('privacy-policy')} className="footer-link">
+                  <Link
+                    to={getPathForRoute('privacy-policy')}
+                    className="footer-link"
+                  >
                     Privacy Policy
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button type="button" onClick={() => onNavigate('terms-conditions')} className="footer-link">
+                  <Link
+                    to={getPathForRoute('terms-conditions')}
+                    className="footer-link"
+                  >
                     Terms and Conditions
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </div>
