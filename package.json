@@ -10,8 +10,7 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "audit:routes": "node scripts/audit-routes.mjs",
-    "verify:spa": "npm run build && node scripts/verify-spa-build.mjs",
-    "deploy:s3": "node scripts/deploy-s3.mjs"
+    "verify:spa": "npm run build && node scripts/verify-spa-build.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
